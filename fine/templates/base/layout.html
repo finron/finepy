@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='description' content="Flask Tornado Python web Fine"/>
+    {% block meta %}{% endblock %}
+    <title>{% block title %}Thinking &amp; Coding{% endblock %}</title>
+    <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    {{ css('style/libs/css/bootstrap.min.css') }}
+    {{ css('style/libs/css/font-awesome.min.css') }}
+    {{ css('style/css/layout.css') }}
+    {{ css('style/css/font-awesome-custom.css') }}
+    {% block head_css %}{% endblock %}
+  </head>
+  <body>
+    {% include "base/topbar.html" %}
+
+    <div id="main">
+      {% block content %}
+        {# {% for message in get_flashed_messages() %} #}
+        {#   <div class="alert alert-warning"> #}
+        {#     <button type="button" class="close" data-dismiss="alert">&times;</button> #}
+        {#     {{ message }} #}
+        {#   </div> #}
+        {# {% endfor %} #}
+        <div class="container maincontainer">
+          <div class="row">
+            <div class="col-md-9">
+              <div class="maincontent">
+                {% block maincontent %}
+                {% endblock %}
+              </div>
+            </div>
+            <div class="col-md-3">
+              {% block sidebar %}
+              {% endblock %}
+            </div>
+          </div>
+        </div>
+      {% endblock %}
+    </div>
+
+    {% include "base/footer.html" %}
+
+
+    <a href="#top" class="goTop"><i class="fa fa-arrow-circle-up fa-2x"></i></a>
+    {{ js('style/libs/js/jquery.min.js') }}
+    {{ js('style/libs/js/bootstrap.min.js') }}
+
+    {# flask-moment src not just include .js but also do extra render script in js #}
+    {{ moment.include_moment(local_js="static/style/libs/js/moment-with-locales.min.js") }}
+    {# {{ moment.include_moment() }} #}
+    {{ moment.lang("zh-cn") }}
+    {{ js('style/js/main.js') }}
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

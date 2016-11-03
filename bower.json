@@ -1,0 +1,17 @@
+{
+  "name": "finepy",
+  "version": "0.1.0",
+  "homepage": "https://github.com/finron/finepy",
+  "authors": [
+    "finron http://github.com/finron"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "1.11.0",
+    "font-awesome": "~4.2.0",
+    "fonts.css": "1.1.0",
+    "bootstrap": "3.3.5",
+    "moment":"2.15.2"
+  }
+}

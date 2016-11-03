@@ -1,0 +1,33 @@
+name,url,weight,note
+GitHub,"https://github.com/",3
+git,"https://git-scm.com/",3
+Flask,"http://flask.pocoo.org/",3,"Armin Ronacher"
+Werkzeug,"http://werkzeug.pocoo.org/",3
+Tornado,"http://www.tornadoweb.org/en/stable/", 3, "Ben Darnell"
+"Python Cookbook","http://dabeaz.com/",3
+Requests,"http://docs.python-requests.org/en/master/",3,"Kenneth Reitz"
+"Dive Into Python3","http://www.diveintopython3.net/",3
+"Flask Web Development","https://blog.miguelgrinberg.com/",3
+"web.py","http://webpy.org/",3,"Aaron Swartz"
+"The C Programming Language","https://en.wikipedia.org/wiki/The_C_Programming_Language",3
+jQuery,"http://jquery.com/",3
+Bootstrap,"http://getbootstrap.com/",3
+JavaScript: The Good Parts,"https://book.douban.com/subject/2994925/",3
+APUE,"http://www.apuebook.com/",3
+SQLite,"http://sqlite.org/",3
+Pyramid,"http://www.pylonsproject.org/",3
+Nginx,"https://www.nginx.com/",3
+Vim,"http://www.vim.org/",3
+"Practical Vim 2nd Edition","https://pragprog.com/book/dnvim2/practical-vim-second-edition",3
+"Understanding and Using C Pointers","https://book.douban.com/subject/20491037/", 3
+"Algorithms","https://book.douban.com/subject/10432347/",3
+"Data Structures and Algorithms in Python","https://book.douban.com/subject/10607365/",3
+"Pointers on C","https://book.douban.com/subject/1648645/",3
+GNU,"https://www.gnu.org/",3
+"Python 源码分析","https://book.douban.com/subject/3117898/",3 
+"Ubuntu","https://www.ubuntu.com/global",3
+"活着","https://book.douban.com/subject/4913064/",3
+"IfConfiger","https://ifconfiger.com/",2
+"螺壳","http://luokr.com/",2
+"代码段","https://daimaduan.com/",2
+"西窗竹","http://www.xichuangzhu.com/",1,"hustlzp"

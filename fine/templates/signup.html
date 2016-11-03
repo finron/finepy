@@ -1,0 +1,25 @@
+{% extends "base/layout.html" %}
+{% block title %}注册{% endblock title %}
+{% block head_css %}
+  <link href="{{ url_for('static', filename='style/css/sign.css') }}" rel="stylesheet">
+{% endblock %}
+{%- from "macros/common.html" import input_csrf_token %}
+{% block maincontent %}
+  <div class="container">
+    <form class="form-sign" role="form" method="POST">
+      <input type="password" hidden>
+      <h2 class="form-sign-heading">注册</h2>
+      {{ input_csrf_token() }}
+      <label for="username" class="sr-only">用户名</label>
+      <input type="text" name="username" id="inputUserName" class="form-control" placeholder="用户名" required autofocus>
+      <label for="email" class="sr-only">邮箱</label>
+      <input type="email" name="email" id="inputEmail" class="form-control" placeholder="邮箱" required>
+      <label for="password" class="sr-only">密码</label>
+      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="密码" required>
+     <button class="btn btn-primary btn-block" type="submit">注册</button>
+      <div class="form-sign-misc">
+        <a class="form-sign-revert" href="/signin">登录</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,264 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+    font-family: Helvetica, "Times New Roman", Times, serif, "Microsoft YaHei", "Wenquanyi Micro Hei";
+    margin-bottom: 58px;
+    margin-top: 28px;
+}
+body span.label a {
+    color: #fff;
+}
+ul {
+    margin-bottom: 20px;
+}
+
+body .navbar-nav > li > a:hover, 
+body .navbar .navbar-brand:hover {
+    padding-top:4px !important; 
+    padding-bottom:0 !important; 
+    vertical-align: center;
+    height: 24px;
+    /* background-color: #ecf0f1 !important; */
+    color: #000 !important;
+}
+body .navbar-nav > li > a, 
+body .navbar .navbar-brand {
+    padding-top:4px !important; 
+    padding-bottom:0 !important; 
+    vertical-align: center;
+    height: 24px;
+    /* background-color: #ecf0f1 !important; */
+    color: #fff !important;
+}
+body .navbar .navbar-form .input-group .embed-btn {
+    background-color: #fff;
+    font-size: 10px;
+}
+body .navbar-form, .form-control {
+    margin-top:0 !important;
+    margin-bottom:0 !important;
+    padding-top:1px !important; 
+    padding-bottom:1px !important;
+    height: 28px !important;
+}
+body .navbar {
+    background-color: #565452 !important;
+    min-height:28px !important;
+}
+
+body .navbar #login {
+    margin-top: 2px !important;
+    color: #545652;
+}
+body #main{
+    color: #555;
+    margin: 32px 0;
+    padding-left: 24px;
+}
+
+body .goTop{
+    position: fixed;
+    bottom: 165px;
+    right: 10px;
+    cursor: pointer;
+    display: none;
+}
+
+body .maincontainer::selection {
+    background-color: #F34069;
+    text-shadow: none;
+}
+body .divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+body .maincontainer {
+    height: 100%;
+}
+body .maincontainer .col-md-3,
+body .maincontainer .col-md-9 {
+    padding-left: 0;
+    padding-right: 0;
+}
+body .maincontainer .widget {
+    border-radius: 0px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    clear: both;
+    word-wrap: break-word;
+}
+@media (max-width: 768px) {
+    body .maincontainer .widget {
+        padding: 8px;
+        margin: 8px;
+    }
+}
+@media (min-width: 768px) {
+    body .maincontainer .widget {
+        padding: 15px;
+        margin: 15px 10px;
+    }
+}
+body .maincontainer .widget strong {
+    font-size: 14px;
+    display: inline-block;
+    line-height: 20px;
+    font-weight: normal;
+    padding: 3px 15px 4px 15px;
+    vertical-align: middle;
+    color: #fff;
+}
+@media (max-width: 768px) {
+    body .maincontainer .widget strong {
+        margin: -14px 0px 0px -9px;
+    }
+}
+@media (min-width: 768px) {
+    body .maincontainer .widget strong {
+        margin: -28px 0px 0px -16px;
+    }
+}
+body .maincontainer .widget strong:hover {
+    color: #000;
+}
+body .maincontainer .widget strong {
+    background-color: #545652;
+    border: 0px solid #F34069;
+}
+body .maincontainer .widget:hover {
+    border: 1px solid #545652;
+}
+/* body .maincontainer .widget.links strong { */
+/*     background-color: #5CB85C; */
+/*     border: 0px solid #5CB85C; */
+/* } */
+/* body .maincontainer .widget.links:hover { */
+/*     border: 1px solid #545652; */
+/* } */
+/* body .maincontainer .widget.links ul { */
+/*     margin: 10px; */
+/*     padding: 0px; */
+/*     list-style: none; */
+/* } */
+body .tagcloud {
+    overflow: auto;
+    margin: 4px 0 0 0;
+    clear: both;
+}
+body .tagcloud div {
+    float: left;
+    display: inline;
+    margin: 5px 8px 5px 0;
+} 
+body .tagcloud a {
+    padding: 4px 10px 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    background: #428bca;
+    color: #fff;
+    transition-duration: 0.3s;
+    box-shadow: 1px 2px 2px #888;
+}
+body .tagcloud a:hover, .tagcloud a:focus {
+    background: #424c50;
+    color: #fff;
+}
+body .tagcloud a {
+    text-decoration: none;
+}
+#footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 40px;
+    z-index: 10;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    color: #666;
+    padding: 5px 0px;
+    text-align: right;
+    border-top: 1px #88a;
+}
+body #footer a {
+    color: #37a;
+}
+body #footer .container #copyright {
+    float: left;
+}
+body #footer .container #topcontrol {
+    margin-left:10px;
+    float: left;
+}
+body #footer .container #links {
+    float: right;
+    margin: 0;
+    list-style-type: none;
+}
+body #footer .container #links li {
+    display: inline-block;
+    margin-left: 15px;
+}
+body #footer .container #links #beian a {
+    color: gray;
+}
+
+/*post*/
+.posts {
+    padding: 10px 10px 10px 10px;
+    line-height: 150%;
+    color: #333;
+}
+.posts .post {
+    margin-bottom: 20px;
+}
+.posts .date {
+    padding: 2px 8px;
+    margin: 5px 0px 0px 0px;
+    border: 1px solid #ccc;
+    font-size: 100%;
+    color: #666;
+    float: right;
+    display: inline;
+    position: relative;
+    top: 4px;
+}
+.posts h1 {
+    font-size: 200%;
+    font-weight: normal;
+    line-height: 140%;
+    padding-bottom: 5px;
+}
+.posts h1 .post-title {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+.posts  h1.post-title a {
+    color: #666;
+}
+.posts .posted {
+    font-size: 100%;
+    font-weight: normal;
+    padding-bottom: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #ccc;
+}
+.posts h4 {
+    font-size: 120%;
+    font-weight: normal;
+}
+.posts .posted span a {
+    color: #eee;
+}
+.posts .page {
+    border-top: 1px solid #ddd;
+}
+.posts a {
+    color: #66a;
+}
+.posts a:hover {
+    color: #000 !important;
+}

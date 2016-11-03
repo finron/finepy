@@ -1,0 +1,16 @@
+<div class="#sidebar">
+  {%if g.sidebar.taglist%}
+  <div class="tags widget">
+    <a href="/tags"><strong>标签</strong></a>
+    <div class="tagcloud">
+      {%for tag in g.sidebar.taglist%}
+      <div class="tag">
+        <a href="/tags/{{tag.name|urlencode}}">
+          {{tag.name}}
+        </a>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+  {%endif%}
+</div>

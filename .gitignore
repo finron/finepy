@@ -1,0 +1,11 @@
+*.pyc
+.pyo
+*.sqlite3
+*.sqlite
+.env
+**/tags
+venv/
+bower_components
+tags
+migrations/
+
