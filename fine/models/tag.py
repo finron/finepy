@@ -14,7 +14,7 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), unique=True)
     weight = db.Column(db.Integer)
-    description = db.Column(db.String(140))
+    note = db.Column(db.String(140))
 
     def __init__(self, *args, **kwargs):
         super(Tag, self).__init__(*args, **kwargs)
@@ -30,7 +30,7 @@ class Tag(db.Model):
               'SQL', 'Tornado', 'Werkzeug'
               ]
         for i, x in enumerate(rv, 1):
-            t = Tag(name=x, weight=i)
+            t = Tag(name=x, weight=i, note='test'+str(i))
             db.session.add(t)
         db.session.commit()
 

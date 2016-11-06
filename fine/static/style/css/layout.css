@@ -54,10 +54,13 @@ body .navbar #login {
 }
 body #main{
     color: #555;
-    margin: 32px 0;
-    padding-left: 24px;
+    margin: 32px !important;
+    padding: 2px 0;
 }
-
+body #main > h1 {
+    line-height: 56px;
+    margin: 40px 32px !important;
+}
 body .goTop{
     position: fixed;
     bottom: 165px;
@@ -261,4 +264,28 @@ body #footer .container #links #beian a {
 }
 .posts a:hover {
     color: #000 !important;
+}
+body #main ul.taglist {
+    font-size: 16px;
+    list-style: none;
+    text-align: left;
+}
+body #main ul.taglist li {
+    word-wrap: break-word;
+    white-space: nowrap;
+    margin: 32px 0;
+    padding-right: 20px;
+    display: inline;
+}
+body #main ul.links {
+    font-size: 16px;
+    list-style: none;
+    text-align: left;
+}
+body #main ul.links li {
+    word-wrap: break-word;
+    white-space: nowrap;
+    margin: 32px 0;
+    padding-right: 20px;
+    display: inline;
 }

@@ -1,3 +1,4 @@
+idle
 *.pyc
 .pyo
 *.sqlite3

@@ -1,0 +1,14 @@
+{% extends "base/layout.html" %}
+
+{% block title %}链接{% endblock %}
+
+{% block content %}
+  <h1>链接</h1>
+  <ul class="links">
+    {% for link in links %}
+      <li>
+        <a target="_blank" href="{{ link.url }}">{{ link.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

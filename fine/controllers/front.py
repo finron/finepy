@@ -17,7 +17,8 @@ from sqlalchemy import or_
 from flask.ext.login import (
     login_user, logout_user, login_required, current_user)
 from fine import db
-from fine.models import Post, Comment, User, Role, Permission
+from fine.models import (Post, Comment, User, Link,
+                         Role, Permission, Tag)
 from fine.email import send_email
 
 bp = Blueprint('front', __name__)
@@ -132,3 +133,15 @@ def signout():
     logout_user()
     flash(u'你已退出')
     return redirect(url_for('.index'))
+
+@bp.route('/tags')
+def tags():
+   tag_items = Tag.query.order_by(Tag.weight.desc()).all()
+   return render_template('tags.html', tags=tag_items)
+
+
+@bp.route('/links')
+def links():
+   l_items = Link.query.order_by(Link.weight.desc()).all()
+   return render_template('links.html', links=l_items)
+

@@ -1,0 +1,14 @@
+{% extends "base/layout.html" %}
+
+{% block title %}标签{% endblock %}
+
+{% block content %}
+  <h1>标签</h1>
+  <ul class="taglist">
+    {% for tag in tags %}
+      <li>
+        <a target="_blank" href="/tags/{{ tag.name }}">{{ tag.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

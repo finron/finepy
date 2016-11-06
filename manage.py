@@ -71,7 +71,7 @@ def deploy():
     upgrade()
 
     # create fake tags
-    Tag.gen_fake()
+    # Tag.gen_fake()
 
     # create user roles
     Role.insert_roles()
