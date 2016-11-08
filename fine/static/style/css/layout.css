@@ -54,8 +54,8 @@ body .navbar #login {
 }
 body #main{
     color: #555;
-    margin: 32px !important;
-    padding: 2px 0;
+    margin: 42px !important;
+    padding: 24px 42px;
 }
 body #main > h1 {
     line-height: 56px;
@@ -81,6 +81,7 @@ body .divider {
 body .maincontainer {
     height: 100%;
 }
+body .col-md-12,
 body .maincontainer .col-md-3,
 body .maincontainer .col-md-9 {
     padding-left: 0;

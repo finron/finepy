@@ -1,0 +1,26 @@
+<li>
+  <select class="form-control">
+    <option value="posts">文章</option>
+    <option value="comments">评论</option>
+    <option value="users">用户</option>
+    <option value="links">链接</option>
+    <option value="logs">日志</option>
+    <option value="settings">配置</option>
+  </select>
+</li>
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">系统管理 <b class="caret"></b></a>
+<ul class="dropdown-menu">
+    <li><a href="/admin/alogs">系统日志</a></li>
+    <li><a href="/admin/cache">系统缓存</a></li>
+</ul>
+</li>
+
+<!-- confs -->
+<li class="dropdown{% if menu == 'confs' %} active{% end %}">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">配置管理 <b class="caret"></b></a>
+<ul class="dropdown-menu">
+    <li><a href="/admin/confs">配置列表</a></li>
+    <li><a href="/admin/conf/create">新增配置</a></li>
+</ul>
+</li>
+

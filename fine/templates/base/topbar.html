@@ -17,6 +17,10 @@
         <li><a href="{{ url_for('post.tag', tag_name='javascript') }}">JavaScript</a></li>
         <li><a href="/links">Links</a></li>
         <li class="divider"></li>
+        {% if current_user and  current_user.is_admin %}
+          <li><a href="{{ url_for('admin.index') }}">后台管理</a></li>
+        {% endif %}
+        <li class="divider"></li>
         <li>
           <form class="navbar-form" method="get" action="{{ url_for('post.search') }}"
             role="search">

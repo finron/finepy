@@ -134,14 +134,8 @@ def signout():
     flash(u'你已退出')
     return redirect(url_for('.index'))
 
-@bp.route('/tags')
-def tags():
-   tag_items = Tag.query.order_by(Tag.weight.desc()).all()
-   return render_template('tags.html', tags=tag_items)
-
 
 @bp.route('/links')
 def links():
    l_items = Link.query.order_by(Link.weight.desc()).all()
    return render_template('links.html', links=l_items)
-

@@ -31,7 +31,7 @@
       {% endif %}
     </div>
     <div class="post-body">
-      {{ post.body }}
+      {{ post.body|safe }}
     </div>
     <div style="clear:both;">
       <a href="post/{{ post.id }}">全文&gt;&gt;</a>

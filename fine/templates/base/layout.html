@@ -11,6 +11,8 @@
     {{ css('style/libs/css/bootstrap.min.css') }}
     {{ css('style/libs/css/font-awesome.min.css') }}
     {{ css('style/css/layout.css') }}
+    {{ css('style/libs/cke/contents.css') }}
+    {{ css('style/libs/cke/plugins/codesnippet/lib/highlight/styles/idea.css') }}
     {{ css('style/css/font-awesome-custom.css') }}
     {% block head_css %}{% endblock %}
   </head>
@@ -20,10 +22,10 @@
     <div id="main">
       {% block content %}
         {# {% for message in get_flashed_messages() %} #}
-        {#   <div class="alert alert-warning"> #}
-        {#     <button type="button" class="close" data-dismiss="alert">&times;</button> #}
-        {#     {{ message }} #}
-        {#   </div> #}
+          {#   <div class="alert alert-warning"> #}
+            {#     <button type="button" class="close" data-dismiss="alert">&times;</button> #}
+            {#     {{ message }} #}
+            {#   </div> #}
         {# {% endfor %} #}
         <div class="container maincontainer">
           <div class="row">
@@ -50,10 +52,14 @@
     {{ js('style/libs/js/bootstrap.min.js') }}
 
     {# flask-moment src not just include .js but also do extra render script in js #}
-    {{ moment.include_moment(local_js="static/style/libs/js/moment-with-locales.min.js") }}
+    {{ moment.include_moment(local_js=url_for('static', filename="style/libs/js/moment-with-locales.min.js")) }}
     {# {{ moment.include_moment() }} #}
     {{ moment.lang("zh-cn") }}
     {{ js('style/js/main.js') }}
+    {{ js('style/libs/cke/plugins/codesnippet/lib/highlight/highlight.pack.js') }}
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
     {% block scripts %}{% endblock %}
   </body>
 </html>
