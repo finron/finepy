@@ -55,11 +55,11 @@
     {{ moment.include_moment(local_js=url_for('static', filename="style/libs/js/moment-with-locales.min.js")) }}
     {# {{ moment.include_moment() }} #}
     {{ moment.lang("zh-cn") }}
+    {% block scripts %}{% endblock %}
     {{ js('style/js/main.js') }}
     {{ js('style/libs/cke/plugins/codesnippet/lib/highlight/highlight.pack.js') }}
     <script>
       hljs.initHighlightingOnLoad();
     </script>
-    {% block scripts %}{% endblock %}
   </body>
 </html>

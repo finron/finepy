@@ -14,5 +14,18 @@ $(document).ready(function(){
         $('html, body').animate({scrollTop : 0},300);
         return false;
     });
+    // admin search date-range
+    $('.input-date-range').datepicker({
+        format: 'yyyy-mm-dd',
+        todayBtn: "linked",
+        clearBtn: true,
+        language: "zh-CN",
+        autoclose: true,
+        todayHighlight: true
+    });
 
+    $('#admin-tab select').change(function(){
+      var url = $(this).val();
+      window.location = url;
+    });
 });

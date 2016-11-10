@@ -1,0 +1,53 @@
+{% extends "admin/_base.html" %}
+{% block title %}
+文章编辑
+{% endblock %}
+{%- from "macros/common.html" import input_csrf_token %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-9">
+
+      <form action="" method="post">
+        {{ input_csrf_token() }}
+        <input type="hidden" name="post_id" id="post_id" {%if post.id %}value="{{post.id}}"{%endif%}/>
+        <div class="input-group">
+          <span class="input-group-addon">标题</span>
+          <input type="text"  name="post_title" id="title" value="{{post.title}}" class="form-control" placeholder="Title">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">标签</span>
+          <input type="text" name="post_tags" id="tags" {% if post.tags is iterable %} value="{{",".join(post.tags)}}" {% endif %} class="form-control" placeholder="逗号隔开">
+        </div>
+        <div class="input-group">
+          <label class="control-label" for="input_post_content">文章内容</label>
+          <div class="post_content">
+            <textarea class="editor ckeditor" name="post_content" id="editor" required>
+              {{ post.body }}
+            </textarea>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="checkbox">
+            <button type="submit" class="btn btn-danger">
+              提交
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <label>
+              <input type="checkbox" name="privacy" value="privacy">
+              仅自己查看
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+  {{ js('style/libs/cke/ckeditor.js') }}
+  {{ js('style/libs/cke/samples/js/sample.js') }}
+  <script>
+    initSample();
+  </script>
+{% endblock %}

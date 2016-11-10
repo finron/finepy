@@ -1,6 +1,6 @@
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 body {
     font-family: Helvetica, "Times New Roman", Times, serif, "Microsoft YaHei", "Wenquanyi Micro Hei";
@@ -289,4 +289,26 @@ body #main ul.links li {
     margin: 32px 0;
     padding-right: 20px;
     display: inline;
+}
+ul.admin-tab {
+    display:flex !important;  
+    list-style:none !important;
+}
+ul.admin-tab li {
+    display: inline !important;
+    padding-right: 2px;
+}
+ul.admin-tab li#listtype select {
+    width:auto !important;
+}
+.input-group .form-control.input-date-range{
+    width: 100px;
+}
+ul.admin-tab li ul.admin-tab-search li {
+    display: inline !important;
+    padding-right: 4px;
+}
+ul.admin-tab li ul.admin-tab-search {
+    display:flex !important;  
+    list-style:none !important;
 }

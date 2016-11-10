@@ -1,9 +1,17 @@
 {% extends "base/layout.html" %}
 
 {% block title %}后台管理{% endblock %}
-
+{% block head_css %}
+  {{ css("style/libs/twbsdatepicker/css/bootstrap-datepicker3.min.css") }}
+{% endblock %}
 {% block maincontent %}
   {% include "admin/_toptab.html" %}
   {% block managelist %}  
+  {% endblock %}
+{% endblock %}
+{% block scripts %}
+  {{ js("style/libs/twbsdatepicker/js/bootstrap-datepicker.min.js") }}
+  {{ js("style/libs/twbsdatepicker/locales/bootstrap-datepicker.zh-CN.min.js") }}
+  {% block admin_scripts %}
   {% endblock %}
 {% endblock %}

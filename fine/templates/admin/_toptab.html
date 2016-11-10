@@ -1,26 +1,50 @@
-<li>
-  <select class="form-control">
-    <option value="posts">文章</option>
-    <option value="comments">评论</option>
-    <option value="users">用户</option>
-    <option value="links">链接</option>
-    <option value="logs">日志</option>
-    <option value="settings">配置</option>
-  </select>
-</li>
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">系统管理 <b class="caret"></b></a>
-<ul class="dropdown-menu">
-    <li><a href="/admin/alogs">系统日志</a></li>
-    <li><a href="/admin/cache">系统缓存</a></li>
-</ul>
-</li>
+<ul class="admin-tab">
+  <li id="listtype">
+    <select class="form-control">
+      <option value="{{ url_for('admin.posts') }}">文章</option>
+      <option value="{{ url_for('admin.comments') }}">评论</option>
+      <option value="{{ url_for('admin.users') }}">用户</option>
+      <option value="{{ url_for('admin.links') }}">链接</option>
+      <option value="{{ url_for('admin.logs') }}">日志</option>
+      <option value="{{ url_for('admin.settings') }}">配置</option>
+    </select>
+  </li>
 
-<!-- confs -->
-<li class="dropdown{% if menu == 'confs' %} active{% end %}">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#">配置管理 <b class="caret"></b></a>
-<ul class="dropdown-menu">
-    <li><a href="/admin/confs">配置列表</a></li>
-    <li><a href="/admin/conf/create">新增配置</a></li>
+  <li id="edit">
+    <button type="button" class="btn btn-default btn-sm">
+      <i class="fa fa-pencil" aria-hidden="true"></i>
+    </button>
+  </li>
+  <li id="delete">
+    <button type="button" class="btn btn-default btn-sm">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+  </li>
+  <li>
+    <form class="input-group" method="get" action="{{ url_for('admin.search') }}">
+      <ul class="admin-tab-search">
+        <li>
+          <!-- <input type="text" name="q_date_range" class="form-control input-date-range" placeholder="起止日期"> -->
+          <div class=" input-group" id="datepicker">
+              <input type="text" class="input-date-range input-sm form-control" name="start" placeholder="起止日期"/>
+              <span class="input-group-addon">到</span>
+              <input type="text" class="input-date-range input-sm form-control" name="end" />
+          </div>        
+        </li>
+        <li>
+          <input type="text" name="q_user" class="input-sm form-conttrol" placeholder="用户名" />
+        </li>
+        <li>
+          <div class="input-group">
+            <input type="text" class="form-control input-sm" placeholder="查询" name="q_text" />
+            <span class="input-group-btn">
+              <button type="submit" title='查询' class="btn btn-default btn-sm">
+                <i class='fa fa-search' aria-hidden="true"></i> 
+              </button>
+            </span>
+          </div>
+        </li>
+      </div>
+    </form>
+  </li>
 </ul>
-</li>
-

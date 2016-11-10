@@ -6,7 +6,7 @@
 '''
 
 from flask import (render_template, Blueprint, request,
-                   url_for)
+                   url_for, current_app)
 
 from fine import db
 from fine.models.post import Post
@@ -32,3 +32,43 @@ def index():
         db.session.add(post)
         db.session.commit()
         return render_template('admin/index.html', post=post)
+
+
+@bp.route('/admin/posts', methods=['GET', 'POST'])
+def posts():
+    page = request.args.get('page', 1, type=int)
+    query = Post.query
+    pagination = query.order_by(Post.post_time.desc()).paginate(
+        page, per_page=current_app.config['FINEPY_POSTS_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    return render_template('admin/posts.html', posts=posts,
+                           pagination=pagination)
+
+@bp.route('/admin/comments', methods=['GET', 'POST'])
+def comments():
+    return ""
+
+
+@bp.route('/admin/users', methods=['GET', 'POST'])
+def users():
+    return ""
+
+
+@bp.route('/admin/links', methods=['GET', 'POST'])
+def links():
+    return ""
+
+
+@bp.route('/admin/logs', methods=['GET', 'POST'])
+def logs():
+    return ""
+
+
+@bp.route('/admin/settings', methods=['GET', 'POST'])
+def settings():
+    return ""
+
+@bp.route('/admin/', methods=['GET', 'POST'])
+def search():
+    return ""

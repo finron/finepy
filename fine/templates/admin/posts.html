@@ -1,0 +1,45 @@
+{% extends "admin/_base.html" %}
+
+{% block title %}文章管理{% endblock %}
+
+{% block managelist %}  
+  <table class="widetable table table-condensed table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="check-column" scope="col" style="">
+          <button class="btn btn-primary btn-xs" id="deletepost">删除</button>
+        </th>
+        <th>日期</th>
+        <th>标题</th>
+        <th>状态</th>
+        <th>允许评论</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+        <tr>
+          <th>
+            <input class="page" type="checkbox" value="on" name="{{ post.id }}">
+          </th>
+          <td>
+            <div class="time">{{ post.post_time.strftime("%Y-%m-%d %H:%M") }}</div>
+          </td>
+          <td>
+            <a href="/admin/post/edit/{{ post.id }}" target="_blank">[编辑]</a>
+            <a href="/post/{{ post.id }}" target="_blank">{{ post.title }}</a>
+          </td>
+          {% if post.privacy %}
+            <td><a href="/admin/posts?privacy=true">私有</a></td>
+          {% else %}
+            <td><a href="/admin/posts?privacy=false">公有</a></td>
+          {% endif %}
+          {% if post.allow_comment %}
+            <td><a href="/admin/posts?allow_comment=true">允许</a></td>
+          {% else %}
+            <td><a href="/admin/posts?allow_comment=false">禁止</a></td>
+          {% endif %}
+        </tr>
+      {% endfor %}				
+    </tbody>
+  </table>
+{% endblock %}
