@@ -1,0 +1,43 @@
+{% extends "admin/_base.html" %}
+
+{% block title %}链接管理{% endblock %}
+
+{% block managelist %}  
+  <table class="widetable table table-condensed table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="check-column" scope="col" style="">
+          <button class="btn btn-primary btn-xs" id="delete">删除</button>
+        </th>
+        <th>名称</th>
+        <th>权重</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for link in links %}
+        <tr>
+          <th>
+            <input class="page" type="checkbox" value="on" name="{{ link.id }}">
+          </th>
+          <td>
+            <a href="/admin/link/edit/{{ link.id }}" target="_blank">[编辑]</a>
+            <a href="{{ link.url }}" target="_blank">{{ link.name }}</a>
+          </td>
+          <td>
+            {{ link.weight }}
+          </td>
+          <td>
+            {{ link.note }}
+          </td>
+        </tr>
+      {% endfor %}				
+    </tbody>
+  </table>
+{% if pagination %}
+{% from "macros/common.html" import render_pagination %}
+<div class="page">
+  {{ render_pagination(pagination, url_for("admin.links")) }}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,12 +1,12 @@
 <ul class="admin-tab">
   <li id="listtype">
     <select class="form-control">
-      <option value="{{ url_for('admin.posts') }}">文章</option>
-      <option value="{{ url_for('admin.comments') }}">评论</option>
-      <option value="{{ url_for('admin.users') }}">用户</option>
-      <option value="{{ url_for('admin.links') }}">链接</option>
-      <option value="{{ url_for('admin.logs') }}">日志</option>
-      <option value="{{ url_for('admin.settings') }}">配置</option>
+      <option {% if tab_menu and tab_menu=='posts' %} selected="selected" {% endif %} value="{{ url_for('admin.posts') }}">文章</option>
+      <option {% if tab_menu and tab_menu=='comments' %} selected="selected" {% endif %} value="{{ url_for('admin.comments') }}">评论</option>
+      <option {% if tab_menu and tab_menu=='users' %} selected="selected" {% endif %} value="{{ url_for('admin.users') }}">用户</option>
+      <option {% if tab_menu and tab_menu=='links' %} selected="selected" {% endif %} value="{{ url_for('admin.links') }}">链接</option>
+      <option {% if tab_menu and tab_menu=='logs' %} selected="selected" {% endif %} value="{{ url_for('admin.logs') }}">日志</option>
+      <option {% if tab_menu and tab_menu=='settings' %} selected="selected" {% endif %} value="{{ url_for('admin.settings') }}">配置</option>
     </select>
   </li>
 

@@ -34,7 +34,9 @@
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <label>
-              <input type="checkbox" name="privacy" value="privacy">
+              <input type="checkbox" name="privacy" 
+              {% if post.privacy %} checked {% endif %}
+              value="privacy">
               仅自己查看
             </label>
           </div>
@@ -44,7 +46,7 @@
   </div>
 </div>
 {% endblock %}
-{% block scripts %}
+{% block admin_scripts %}
   {{ js('style/libs/cke/ckeditor.js') }}
   {{ js('style/libs/cke/samples/js/sample.js') }}
   <script>

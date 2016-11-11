@@ -1,7 +1,15 @@
-{% extends "base/layout.html" %}
-
-{% block title %}finepy-Page Not Found{% endblock %}
-
-{% block scripts %}
-  <script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8" homePageUrl="http://www.finepy.com" homePageName="回到主页"></script>
-{% endblock %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>404NotFound</title>
+    <link rel="Shortcut Icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+  </head>
+  <body>
+    <div align="center">
+      <h2>您不经意的举动，可能带给孩子一个崭新的世界</h2>
+    </div>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone_v6/lostchild/search_children.js">
+    </script>
+  </body>
+</html>

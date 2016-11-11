@@ -2,7 +2,7 @@
 # coding:utf-8
 
 import os
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template
 from markupsafe import Markup
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
@@ -54,6 +54,9 @@ def before_req(app):
         taglist = Tag.get_top_x()
         g.sidebar = {'taglist': taglist}
 
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template('404.html'), 404
 
 def register_routes(app):
     """Map the http url to func"""

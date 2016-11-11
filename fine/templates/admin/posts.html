@@ -42,4 +42,10 @@
       {% endfor %}				
     </tbody>
   </table>
+{% if pagination %}
+{% from "macros/common.html" import render_pagination %}
+<div class="page">
+  {{ render_pagination(pagination, url_for("admin.posts")) }}
+</div>
+{% endif %}
 {% endblock %}

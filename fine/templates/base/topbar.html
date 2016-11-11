@@ -17,7 +17,9 @@
         <li><a href="{{ url_for('post.tag', tag_name='javascript') }}">JavaScript</a></li>
         <li><a href="/links">Links</a></li>
         <li class="divider"></li>
-        {% if current_user and  current_user.is_admin %}
+        <li><a href="/404">宝贝回家公益</a></li>
+        <li class="divider"></li>
+        {% if current_user and  current_user.is_admin() %}
           <li><a href="{{ url_for('admin.index') }}">后台管理</a></li>
         {% endif %}
         <li class="divider"></li>
@@ -46,7 +48,7 @@
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                {% if current_user.is_admin %}
+                {% if current_user.is_admin() %}
                   <li><a href="{{ url_for('admin.index') }}">我的主页</a></li>
                 {% else %}
                   <li><a href="{{ url_for('user.index') }}">我的主页</a></li>

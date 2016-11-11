@@ -1,0 +1,38 @@
+{% extends "admin/_base.html" %}
+{% block title %}
+链接编辑
+{% endblock %}
+{%- from "macros/common.html" import input_csrf_token %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-9">
+
+      <form action="" method="post">
+        {{ input_csrf_token() }}
+        <input type="hidden" name="link_id" id="link_id" {%if link.id %}value="{{link.id}}"{%endif%}/>
+        <div class="input-group">
+          <span class="input-group-addon">名称</span>
+          <input type="text"  name="link_name" value="{{link.name}}" class="form-control" placeholder="名称">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">链接</span>
+          <input type="text"  name="link_url" value="{{link.url}}" class="form-control" placeholder="链接">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">权重</span>
+          <input type="text"  name="link_weight" value="{{link.weight}}" class="form-control" placeholder="权重">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">备注</span>
+          <input type="text"  name="link_note" value="{{link.note}}" class="form-control" placeholder="备注">
+        </div>
+        <div class="input-group">
+            <button type="submit" class="btn btn-danger">
+              提交
+            </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
