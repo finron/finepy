@@ -4,13 +4,14 @@
     ~~~~~~~~
 
 '''
-
+from datetime import datetime
 from flask import (render_template, Blueprint, request,
-                   url_for, current_app)
+                   url_for, current_app, redirect)
 
 from fine import db
 from fine.models import (Post, User, Tag, Link,
                          Comment)
+from fine.lib.util import remove_html_tag
 
 bp = Blueprint('admin', __name__)
 
@@ -24,9 +25,7 @@ def index():
         form = request.form
         post = Post()
         content = form.get('post_content', 'None')
-        import pdb; pdb.set_trace()
-        content_summary = content[:320]
-
+        content_summary = remove_html_tag(content)[:140]
         post.title = form.get('post_title', 'None')
         post.body_html = content_summary
         post.body = content
@@ -51,18 +50,17 @@ def edit_post(id=None):
         else:
             post = Post()
         is_privacy = 'privacy' in form
-        print request.form
-        content = form.get('post_content', 'None')
-        content_summary = content[:320]
 
-        post.title = form.get('post_title', 'None')
-        post.body_html = content_summary
+        content = form.get('post_content', 'None')
         post.body = content
+        content_summary =  remove_html_tag(content)[:140]
+        post.body_html = content_summary
+        post.title =form.get('post_title', 'None')
         post.privacy = is_privacy
+        post.post_time = datetime.utcnow()
         db.session.add(post)
         db.session.commit()
-        return render_template('admin/posts.html',
-                               tab_menu='posts')
+        return redirect('/admin/posts.html')
 
 
 @bp.route('/admin/link', methods=['GET', 'POST'])
@@ -81,7 +79,7 @@ def edit_link(id=None):
             link = Link.query.get_or_404(id)
         else:
             link = Link()
-        link.name = unicode(form.get('link_name', 'None'))
+        link.name = form.get('link_name', 'None')
         link.url =  form.get('link_url', 'None')
         try:
             link_weight = int(form.get('link_weight', 1))

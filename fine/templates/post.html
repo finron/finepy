@@ -1,1 +1,71 @@
 {% extends "base/layout.html" %}
+{% block maincontent %}
+<div class="post posts">
+  <p class="date">
+    {{ moment(post['post_time']).format('YYYY-MM-DD HH:mm') }}
+  </p>
+  <h1 class="post-title">
+    <a href="/post/{{ post.id }}" title="{{ post.title }}">
+      {{ post['title'] }}
+    </a>
+  </h1>
+  <div class="posted">
+    {% if current_user %}
+    <span class="label label-primary">
+      <a href="/admin/post/edit/{{ post.id }}">
+        编辑
+      </a>
+    </span>
+    {% endif %}
+    <span class="label label-default">
+      <a href="/user/{{ post.author.username }}">
+        @{{ post.author.username }}
+      </a>
+    </span>
+    {% if post.tags %}
+      &nbsp;标签:&nbsp;
+      {% if post.tags is iterable %}
+        {% for tag_name in post.tags %}
+          <span class="label label-primary">
+            <a href="/tags/{{ tag_name }}"> {{ tag_name }}&nbsp;&nbsp;</a>
+          </span>
+        {% endfor %}
+      {% else %}
+        <span class="label label-primary">
+          <a href="/tags/{{ post.tags.name }}"> {{ post.tags.name }}&nbsp;&nbsp;</a>
+        </span>
+      {% endif %}
+    {% endif %}
+  </div>
+  <div class="post-body">
+    {{ post.body|safe }}
+  </div>
+  {# <h4 style="text-align: right"> #}
+  <h4>
+    <a name="comments"></a>
+    {{ post.comments|length }}评论
+  </h4>
+  {# TODO #}
+  {# <div class="comment"> #}
+  {#   <ul> #}
+  {#     {% for comment in post.comments %} #}
+  {#       <li> #}
+  {#         <div class="comment-thumb"> #}
+  {#             <img src="{{ commentor.gravatar(size=18) }}"> #}
+  {#                   {{ commentor.name }} #}
+  {#         </div> #}
+  {#         <div class="comment-body"> #}
+  {#           <p> #}
+  {#             <span class="label label-default"> #}
+  {#               #{{ (loop.index + 1) }} #}
+  {#             </span> #}
+              
+
+  </div>
+{% if pagination %}
+  {% from "macros/common.html" import render_pagination %}
+  <div class="page">
+    {{ render_pagination(pagination, url_for("front.index")) }}
+  </div>
+{% endif %}
+{% endblock %}

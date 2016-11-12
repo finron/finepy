@@ -10,10 +10,12 @@ from fine.models import Post, Tag
 bp = Blueprint('post', __name__)
 
 
-@bp.route('/post/')
-def post():
-    '''Blog page'''
-    return render_template('post.html')
+@bp.route('/post/<int:id>')
+def post(id):
+    '''Blog show page'''
+    post = Post.query.get_or_404(id)
+    # import pdb; pdb.set_trace()
+    return render_template('post.html', post=post)
 
 
 @bp.route('/tags/<tag_name>')

@@ -210,13 +210,13 @@ body #footer .container #links #beian a {
     color: gray;
 }
 
-/*post*/
+/*post list and post show */
 .posts {
-    padding: 10px 10px 10px 10px;
+    /* padding: 10px 10px 10px 10px; */
     line-height: 150%;
     color: #333;
 }
-.posts .post {
+.posts .post, .post {
     margin-bottom: 20px;
 }
 .posts .date {
@@ -290,6 +290,7 @@ body #main ul.links li {
     padding-right: 20px;
     display: inline;
 }
+/* admin-tab */
 ul.admin-tab {
     display:flex !important;  
     list-style:none !important;
