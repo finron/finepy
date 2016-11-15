@@ -1,4 +1,5 @@
 {% extends "base/layout.html" %}
+{%- from "macros/common.html" import input_csrf_token %}
 {% block maincontent %}
 <div class="post posts">
   <p class="date">
@@ -23,49 +24,90 @@
       </a>
     </span>
     {% if post.tags %}
-      &nbsp;标签:&nbsp;
-      {% if post.tags is iterable %}
-        {% for tag_name in post.tags %}
-          <span class="label label-primary">
-            <a href="/tags/{{ tag_name }}"> {{ tag_name }}&nbsp;&nbsp;</a>
-          </span>
-        {% endfor %}
-      {% else %}
-        <span class="label label-primary">
-          <a href="/tags/{{ post.tags.name }}"> {{ post.tags.name }}&nbsp;&nbsp;</a>
-        </span>
-      {% endif %}
+    &nbsp;标签:&nbsp;
+    {% if post.tags is iterable %}
+    {% for tag_name in post.tags %}
+    <span class="label label-primary">
+      <a href="/tags/{{ tag_name }}"> {{ tag_name }}&nbsp;&nbsp;</a>
+    </span>
+    {% endfor %}
+    {% else %}
+    <span class="label label-primary">
+      <a href="/tags/{{ post.tags.name }}"> {{ post.tags.name }}&nbsp;&nbsp;</a>
+    </span>
+    {% endif %}
     {% endif %}
   </div>
   <div class="post-body">
     {{ post.body|safe }}
   </div>
-  {# <h4 style="text-align: right"> #}
-  <h4>
-    <a name="comments"></a>
+</div>
+<h4>
+  <a name="comments">
     {{ post.comments|length }}评论
-  </h4>
-  {# TODO #}
-  {# <div class="comment"> #}
-  {#   <ul> #}
-  {#     {% for comment in post.comments %} #}
-  {#       <li> #}
-  {#         <div class="comment-thumb"> #}
-  {#             <img src="{{ commentor.gravatar(size=18) }}"> #}
-  {#                   {{ commentor.name }} #}
-  {#         </div> #}
-  {#         <div class="comment-body"> #}
-  {#           <p> #}
-  {#             <span class="label label-default"> #}
-  {#               #{{ (loop.index + 1) }} #}
-  {#             </span> #}
-              
-
-  </div>
+  </a>
+</h4>
+<div class="comment">
+  <ul>
+    {% for comment in comments %}
+    <li>
+      <div class="comment-thumb">
+        <img src="{{ comment.gravatar() }}">
+      </div>
+      <div class="comment-body">
+        <p>
+          <span class="label label-default">
+            #{{ (loop.index + 1) }}
+          </span>
+          {% set commentor = comment.get_user() %}
+          {% if commentor and commentor.is_admin() %}
+            <span class="label label-default">
+          {% elif commentor and commentor.user_id == post.author_id %}
+            <span class="label label-danger">
+          {% else %}
+          <span class="label label-primary">
+          {% endif %}
+            @{{ comment.nickname}}
+          {% if comment.get_ref_comment() %}
+            &nbsp;&nbsp;回复{{ comment.get_ref_comment().nickname }}&nbsp;
+          {% endif %}  
+          </span>
+              &nbsp;于{{ moment(comment['create_time']).format('YYYY-MM-DD HH:mm') }}
+        </p>
+        <div style="overflow: auto;">
+          <p style="white-space: pre-wrap;">
+            {{ comment.body }}
+          </p>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 {% if pagination %}
-  {% from "macros/common.html" import render_pagination %}
-  <div class="page">
-    {{ render_pagination(pagination, url_for("front.index")) }}
-  </div>
+{% from "macros/common.html" import render_pagination %}
+<div class="page">
+  {# {{ render_pagination(pagination, url_for(".post")) }} #}
+  {{ render_pagination(pagination) }}
+</div>
 {% endif %}
+<h3><a name="commentform" href="#comment">发表评论</a></h3>
+<form class="form" action="#comment" method="post" role="form">
+  {{ input_csrf_token() }}
+  {% if not (current_user and current_user.is_active) %}
+  <div class="form-group">
+    <label class="control-label" for="name">昵称</label>
+    <input id="name" class="form-control col-md-4" name="nickname" {% if session['commentor'] %} value="{{ session['commentor']['nickname'] }}" {% endif %} required type="text">
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="email">邮箱</label>
+    <input id="email" class="form-control" name="email" {% if session['commentor'] %} value="{{ session['commentor']['email'] }}" {% endif %} required type="email">
+  </div>
+  {% endif %}
+  <div class="form-group">
+    <label class="control-label" for="comment">评论</label>
+    <textarea id="comment" class="form-control" name="comment" required></textarea>
+  </div>
+  <input id="submit" class="btn btn-default" name="submit" value="提交" type="submit">
+</form>
 {% endblock %}

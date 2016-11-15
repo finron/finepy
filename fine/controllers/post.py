@@ -1,22 +1,54 @@
 # coding:utf-8
-
 from flask import (render_template, Blueprint, request,
-                   redirect, url_for, current_app)
+                   redirect, url_for, current_app,
+                   flash, session)
 from flask.ext.login import login_required, current_user
 from sqlalchemy import func
-
-from fine.models import Post, Tag
+from fine import db
+from fine.models import Post, Tag, Comment, User
 
 bp = Blueprint('post', __name__)
 
 
-@bp.route('/post/<int:id>')
+@bp.route('/post/<int:id>', methods=['GET', 'POST'])
 def post(id):
     '''Blog show page'''
     post = Post.query.get_or_404(id)
-    # import pdb; pdb.set_trace()
-    return render_template('post.html', post=post)
-
+    if request.method == 'GET':
+        page = request.args.get('page', 1, type=int)
+        per_page = current_app.config['FINEPY_COMMENTS_PER_PAGE']
+        if page == 0:
+            page = (len(post.comments) - 1) / per_page + 1
+        pagination = Comment.query.filter(Comment.post_id==post.id).order_by(
+            Comment.create_time.asc()).paginate(
+                page=page,
+                per_page=per_page,
+                error_out=False)
+        comments = pagination.items
+        return render_template('post.html', post=post,
+                           comments=comments,
+                           pagination=pagination)
+    elif request.method == 'POST':
+        form = request.form
+        comment = Comment()
+        comment.body = form['comment']
+        comment.nickname = form['nickname']
+        comment.email = form['email']
+        comment.avatar_hash = comment.gravatar()
+        comment.post_id = post.id
+        if current_user and current_user.is_active:
+            user = current_user._get_current_object()
+            comment.nickname = user.name
+            comment.email = user.email
+            comment.user_id = user.id
+        db.session.add(comment)
+        db.session.commit()
+        commentor = {'body': comment.body,
+                     'email': comment.email,
+                     'nickname': comment.nickname}
+        session['commentor'] = commentor
+        flash(u'评论成功')
+        return redirect(url_for('.post', id=post.id, page=0))
 
 @bp.route('/tags/<tag_name>')
 def tag(tag_name):

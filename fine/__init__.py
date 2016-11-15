@@ -118,3 +118,4 @@ def _import_module_from_package(package):
                                         prefix=package.__name__ + "."):
         modules.append(__import__(modname, fromlist="dummy"))
     return modules
+app = create_app()
