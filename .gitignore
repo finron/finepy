@@ -4,6 +4,8 @@ idle
 *.sqlite3
 *.sqlite
 .env
+env.json
+auth.json
 **/tags
 venv/
 bower_components

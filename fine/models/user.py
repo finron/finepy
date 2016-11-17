@@ -38,6 +38,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(42), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
+    social_id = db.Column(db.String(64), unique=True, index=True)
     role_id = db.Column(db.Integer)
     role = db.relationship('Role', foreign_keys=[role_id],
                            primaryjoin='User.role_id == Role.id',
@@ -186,6 +187,8 @@ class User(UserMixin, db.Model):
             url = 'https://secure.gravatar.com/avatar'
         else:
             url = 'http://cn.gravatar.com/avatar'
+        #TODO GitHub oauth2 login email maybe null will lead to errors
+        # email is null when the user set no public email in GitHub
         hash = self.avatar_hash or hashlib.md5(
             self.email.encode('utf-8')).hexdigest()
         return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
