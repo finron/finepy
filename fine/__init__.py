@@ -2,7 +2,7 @@
 # coding:utf-8
 
 import os
-import io
+
 from flask import Flask, url_for, render_template, current_app
 from markupsafe import Markup
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -12,7 +12,6 @@ from flask.ext.moment import Moment
 from flask.ext.mail import Mail
 
 from config import config, basedir
-from flask import json
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -27,13 +26,6 @@ def create_app(config_name='default'):
 
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
-
-    auth_file = os.path.join(basedir, 'env.json')
-    if os.path.exists(auth_file):
-        with io.open(auth_file, encoding='utf-8') as af:
-            app.config['OAUTH_CREDENTIALS'] = json.load(af)
-    else:
-        current_app.logger.info(u'env.json not exists')
 
     mail.init_app(app)
     db.init_app(app)

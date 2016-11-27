@@ -20,7 +20,8 @@ bp = Blueprint('admin', __name__)
 def index():
     if request.method == 'GET':
         post = Post()
-        return render_template('admin/index.html', post=post)
+        return render_template('admin/index.html', post=post,
+                               tabmenu='posts')
     elif request.method == 'POST':
         form = request.form
         post = Post()
@@ -61,7 +62,6 @@ def edit_post(id=None):
         db.session.add(post)
         db.session.commit()
         return redirect('/admin/posts.html')
-
 
 @bp.route('/admin/link', methods=['GET', 'POST'])
 @bp.route('/admin/link/<int:id>', methods=['GET'])
@@ -113,7 +113,15 @@ def comments():
 
 @bp.route('/admin/users', methods=['GET', 'POST'])
 def users():
-    return ""
+    page = request.args.get('page', 1, type=int)
+    query = User.query
+    pagination = query.order_by(User.id.asc()).paginate(
+        page, per_page=current_app.config['FINEPY_POSTS_PER_PAGE'],
+        error_out=False)
+    users = pagination.items
+    return render_template('admin/users.html', users=users,
+                           pagination=pagination,
+                           tab_menu='users')
 
 
 @bp.route('/admin/links', methods=['GET', 'POST'])
@@ -127,6 +135,33 @@ def links():
     return render_template('admin/links.html', links=links,
                            pagination=pagination,
                            tab_menu='links')
+
+
+@bp.route('/admin/user', methods=['GET', 'POST'])
+@bp.route('/admin/user/<int:id>', methods=['GET'])
+@bp.route('/admin/user/edit/<int:id>', methods=['GET', 'POST'])
+def edit_user(id=None):
+    if request.method == 'GET':
+        if id:
+            user = User.query.get_or_404(id)
+            return render_template('admin/user.html', user=user)
+        user = User()
+        return render_template('admin/user.html', user=user)
+    else:
+        form = request.form
+        if id:
+            user = User.query.get_or_404(id)
+        else:
+            user = User()
+        user.username = form.get('username', 'None')
+        user.email = form.get('email', 'None')
+        user.name = form.get('name')
+        user.confirmed = 'confirmed' in  form
+        user.avatar_hash = user.gravatar()
+        db.session.add(user)
+        db.session.commit()
+        return render_template('admin/users.html',
+                               tab_menu='users')
 
 
 @bp.route('/admin/logs', methods=['GET', 'POST'])

@@ -1,0 +1,53 @@
+{% extends "admin/_base.html" %}
+
+{% block title %}用户管理{% endblock %}
+
+{% block managelist %}  
+  <table class="widetable table table-condensed table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="check-column" scope="col" style="">
+          <button class="btn btn-primary btn-xs" id="delete">删除</button>
+        </th>
+        <th>邮箱</th>
+        <th>用户名</th>
+        <th>姓名</th>
+        <th>用户已确认</th>
+        <th>社交ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <th>
+            <input class="page" type="checkbox" value="on" name="{{ user.id }}">
+          </th>
+          <td>
+            <a href="/admin/user/edit/{{ user.id }}" target="_blank">[编辑]
+
+           </a>
+           {{ user.email  }}
+          </td>
+          <td>
+            {{ user.username }}
+          </td>
+          <td>
+            {{ user.name }}
+          </td>
+          <td>
+            {{ user.confirmed }}
+          </td>
+          <td>
+            {{ user.social_id }}
+          </td>
+        </tr>
+      {% endfor %}				
+    </tbody>
+  </table>
+{% if pagination %}
+{% from "macros/common.html" import render_pagination %}
+<div class="page">
+  {{ render_pagination(pagination, url_for("admin.users")) }}
+</div>
+{% endif %}
+{% endblock %}

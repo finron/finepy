@@ -1,0 +1,48 @@
+{% extends "admin/_base.html" %}
+{% block title %}
+用户编辑
+{% endblock %}
+{%- from "macros/common.html" import input_csrf_token %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-9">
+
+      <form action="" method="post">
+        {{ input_csrf_token() }}
+        <input type="hidden" name="user_id" id="user_id" {%if user.id %}value="{{user.id}}"{%endif%}/>
+        <div class="input-group">
+          <span class="input-group-addon">邮箱</span>
+          <input type="text"  name="email" value="{{ user.email }}" class="form-control" placeholder="邮箱">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">用户名</span>
+          <input type="text"  name="username" value="{{ user.username}}" class="form-control" placeholder="用户名">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">角色</span>
+          <input type="text"  name="role_id" value="{{ user.role_id}}" class="form-control" placeholder="角色">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon">姓名</span>
+          <input type="text"  name="name" value="{{ user.name}}" class="form-control" placeholder="姓名">
+        </div>
+        <div class="input-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="confirmed"
+                {% if user.confirmed %} checked {% endif %}
+                value="confirmed"/>
+                用户已确认
+            </label>
+          </div>
+        </div>
+        <div class="input-group">
+            <button type="submit" class="btn btn-danger">
+              提交
+            </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

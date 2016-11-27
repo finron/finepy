@@ -41,10 +41,9 @@ def index():
 
 @bp.route('/signin', methods=['GET', 'POST'])
 def signin():
-    # import pdb; pdb.set_trace()
     if request.method == 'GET':
         if 'username' in session:
-            return redirect(url_for('user.index'))
+            return redirect(url_for('.index'))
         return render_template('signin.html')
     elif request.method == 'POST':
         #TODO email or name both valid
@@ -56,9 +55,9 @@ def signin():
 
         user = User.query.filter(or_(User.email==name_email,
                                         User.username==name_email)).first()
-        # import pdb; pdb.set_trace()
         if user and user.verify_password(password):
             remember_me = request.form.get('remeber-me')
+            print remember_me
             login_user(user, remember_me)
             return redirect(request.args.get('next') or url_for('.index'))
         return render_template(url_for('.unconfirmed'))
@@ -68,7 +67,7 @@ def signin():
 def signup():
     if request.method == 'GET':
         if 'username' in session:
-            return redirect(url_for('user.index'))
+            return redirect(url_for('.index'))
         return render_template('signup.html')
     elif request.method == 'POST':
         # import pdb; pdb.set_trace()
@@ -114,13 +113,14 @@ def confirm(token):
 @login_required
 def resend_confirmation():
     token = current_user.generate_confirmation_token()
-    send_email(current_user.email, 'Confirm Your Account',
+    send_email(current_user.email, u'确认邮件',
                'auth/email/confirm', user=current_user, token=token)
     flash(u'新的确认邮件已发送到你邮箱')
     return redirect(url_for('.index'))
 
 
 @bp.route('/unconfirmed')
+@login_required
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('.index'))

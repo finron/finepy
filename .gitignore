@@ -6,6 +6,7 @@ idle
 .env
 env.json
 auth.json
+TODO.txt
 **/tags
 venv/
 bower_components

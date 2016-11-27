@@ -61,16 +61,16 @@
           </span>
           {% set commentor = comment.get_user() %}
           {% if commentor and commentor.is_admin() %}
-            <span class="label label-default">
+          <span class="label label-default">
           {% elif commentor and commentor.user_id == post.author_id %}
-            <span class="label label-danger">
+          <span class="label label-danger">
           {% else %}
           <span class="label label-primary">
           {% endif %}
             @{{ comment.nickname}}
-          {% if comment.get_ref_comment() %}
+            {% if comment.get_ref_comment() %}
             &nbsp;&nbsp;回复{{ comment.get_ref_comment().nickname }}&nbsp;
-          {% endif %}  
+            {% endif %}  
           </span>
               &nbsp;于{{ moment(comment['create_time']).format('YYYY-MM-DD HH:mm') }}
         </p>

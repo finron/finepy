@@ -48,7 +48,7 @@
                 {% if current_user.is_admin() %}
                   <li><a href="{{ url_for('admin.index') }}">我的主页</a></li>
                 {% else %}
-                  <li><a href="{{ url_for('user.index') }}">我的主页</a></li>
+                  <li><a href="{{ url_for('front.index') }}">我的主页</a></li>
                 {% endif %}
                 <li class="divider"></li>
                 <li><a href="/signout" class="action-signout"><i class="icon-off"></i>退出</a></li>

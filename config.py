@@ -1,22 +1,29 @@
 #coding: utf-8
+
+import io
 import os
+
+from flask import json
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 def init_env():
-    '''Init the secret environ args'''
+    '''Init the environ args'''
 
-    env_file = os.path.join(basedir, '.env')
+    env_file = os.path.join(basedir, 'env.json')
     if os.path.exists(env_file):
-        print('Importing environment from .env...')
-        for line in open(env_file):
-            var = line.strip().split('=')
-            if len(var) == 2:
-                os.environ[var[0]] = var[1]
+        print('Importing environment from env.json...')
+        with io.open(env_file, encoding='utf-8') as f:
+            json_obj = json.load(f)
+            for k,v  in json_obj['env_option'].iteritems():
+                os.environ[k] = v
+            return json_obj
+
 
 class Config():
     '''Init app config'''
-    init_env()
+    json_obj = init_env()
     SECRET_KEY = (os.environ.get('SECRET_KEY') or
         '\x81<\x0f\x00^\x9a3X/\xd4\xfe\x05\xf5'
         '\xd5c\x9brg\xc0\xe9\x8a(\xc4\x11')
@@ -29,14 +36,17 @@ class Config():
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
 
+
+    if not json_obj:
+        print(u'env.json not include "oauth" field')
+
+    OAUTH = json_obj['oauth']
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FINEPY_MAIL_SUBJECT_PREFIX = '[finepy.com]'
-    FINEPY_MAIL_SENDER = os.environ.get('FINEPY_MAIL_SENDER')
+    FINEPY_MAIL_SENDER = os.environ.get('FINEPY_ADMIN_EMAIL')
+    FINEPY_ADMIN_EMAIL = os.environ.get('FINEPY_ADMIN_EMAIL')
     FINEPY_ADMIN = os.environ.get('FINEPY_ADMIN')
-    # FINE_ADMIN 为 第一个Admin的 用户名默认finron
-    FINE_ADMIN = os.environ.get('FINE_ADMIN')
-    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
     FINEPY_POSTS_PER_PAGE = 10
     FINEPY_FOLLOWERS_PER_PAGE = 10
     FINEPY_COMMENTS_PER_PAGE = 10

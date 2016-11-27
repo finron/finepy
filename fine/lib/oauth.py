@@ -19,7 +19,7 @@ class OAuthBase(object):
 
     def __init__(self, provider_name):
         self.provider_name = provider_name
-        credentails = current_app.config['OAUTH_CREDENTIALS'][provider_name]
+        credentails = current_app.config['OAUTH'][provider_name]
         self.app_id = credentails['id']
         self.app_secret = credentails['secret']
 

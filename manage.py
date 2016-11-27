@@ -6,15 +6,8 @@ if os.environ.get('FLASK_COVERAGE'):
     COV = coverage.coverage(branch=True, include='fine/*')
     COV.start()
 
-if os.path.exists('.env'):
-    print('Importing environment from .env...')
-    for line in open('.env'):
-        var = line.strip().split('=')
-        if len(var) == 2:
-            os.environ[var[0]] = var[1]
-
 from fine import create_app, db
-from fine.models import (User, Follow, Role, Permission,
+from fine.models import (User, Role, Permission,
                          Post, Comment, Link, Tag)
 from flask.ext.script import Manager, Shell
 from flask.ext.migrate import Migrate, MigrateCommand
@@ -25,7 +18,7 @@ migrate = Migrate(app, db)
 
 
 def make_shell_context():
-    return dict(app=app, db=db, User=User, Follow=Follow, Role=Role,
+    return dict(app=app, db=db, User=User, Role=Role,
                 Permission=Permission, Post=Post, Comment=Comment)
 manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
