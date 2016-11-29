@@ -41,6 +41,10 @@ class Config():
         print(u'env.json not include "oauth" field')
 
     OAUTH = json_obj['oauth']
+
+    CELERY_BROKER_URL='redis://localhost:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     FINEPY_MAIL_SUBJECT_PREFIX = '[finepy.com]'

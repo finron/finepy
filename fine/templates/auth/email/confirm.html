@@ -1,8 +1,8 @@
-<p>Dear {{ user.username }},</p>
-<p>Welcome to <b>Flasky</b>!</p>
-<p>To confirm your account please <a href="{{ url_for('front.confirm', token=token, _external=True) }}">click here</a>.</p>
-<p>Alternatively, you can paste the following link in your browser's address bar:</p>
+<p>你好 <b>{{ user.username }}</b>,</p>
+<p>欢迎来到<b>finepy.com</b>!</p>
+<p><a href="{{ url_for('front.confirm', token=token, _external=True) }}">确认邮件链接</a>.</p>
+<p>或者复制一下地址到浏览器地址栏</p>
 <p>{{ url_for('front.confirm', token=token, _external=True) }}</p>
-<p>Sincerely,</p>
-<p>The Flasky Team</p>
-<p><small>Note: replies to this email address are not monitored.</small></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此致!</p>
+<p>The finepy.com Team</p>
+<p><small>请不要回复此邮件!</small></p>

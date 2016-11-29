@@ -10,8 +10,8 @@ from flask.ext.login import LoginManager
 from flask.ext.wtf import CsrfProtect
 from flask.ext.moment import Moment
 from flask.ext.mail import Mail
-
-from config import config, basedir
+from celery import Celery
+from config import Config, config, basedir
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -20,6 +20,7 @@ login_manager.login_view = 'front.signin'
 moment = Moment()
 mail = Mail()
 csrf = CsrfProtect()
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 
 def create_app(config_name='default'):
     app = Flask(__name__)
@@ -31,6 +32,8 @@ def create_app(config_name='default'):
     db.init_app(app)
     moment.init_app(app)
     csrf.init_app(app)
+    celery.conf.update(app.config)
+
     before_req(app)
     login_manager.init_app(app)
 

@@ -50,7 +50,7 @@ def signin():
         name_email = request.form['email']
         password = request.form['password']
         if not name_email.strip() or not password:
-            flash('用户名/邮箱/密码错误')
+            flash(u'用户名/邮箱/密码错误')
             return redirect(url_for('.signin'))
 
         user = User.query.filter(or_(User.email==name_email,
@@ -60,7 +60,8 @@ def signin():
             print remember_me
             login_user(user, remember_me)
             return redirect(request.args.get('next') or url_for('.index'))
-        return render_template(url_for('.unconfirmed'))
+        flash(u'用户名密码错误')
+        return render_template(url_for('.signin'))
 
 
 @bp.route('/signup', methods=['GET', 'POST'])
@@ -113,6 +114,7 @@ def confirm(token):
 @login_required
 def resend_confirmation():
     token = current_user.generate_confirmation_token()
+    # send_email(current_user.email, u'确认邮件',
     send_email(current_user.email, u'确认邮件',
                'auth/email/confirm', user=current_user, token=token)
     flash(u'新的确认邮件已发送到你邮箱')
