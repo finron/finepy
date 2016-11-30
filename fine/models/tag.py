@@ -7,7 +7,6 @@
 
 from fine import db
 
-
 class Tag(db.Model):
     __tablename__ = 'tags'
 
@@ -20,19 +19,34 @@ class Tag(db.Model):
         super(Tag, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return '<Tag %r>' % self.name
+        return '<Tag %d>' % self.id
 
     @staticmethod
-    def gen_fake():
+    def generate_fake():
         rv = ['Python', 'Linux', 'C',
               'stackoverflow', 'JavaScript', 'Alogrithms',
               'Vim', 'Nginx', 'Flask',
+              'SQLAlchemy', 'Java', 'jQuery',
               'SQL', 'Tornado', 'Werkzeug'
               ]
         for i, x in enumerate(rv, 1):
-            t = Tag(name=x, weight=i, note='test'+str(i))
+            t = Tag.get_one(x)
+            if t:
+                t.weight += 1
+                db.session.commit()
+                continue
+            t = Tag(name=x, weight=i,
+                    note='test'+str(i))
             db.session.add(t)
         db.session.commit()
+
+    @staticmethod
+    def get_posts(self):
+        ''' Get posts '''
+        from .post import PostTag
+        posttag = PostTag.query.filter(PostTag.tag_id == self.id).first()
+        if posttag:
+            return posttag.posts
 
     @classmethod
     def get_one(cls, name):

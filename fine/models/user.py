@@ -16,6 +16,7 @@ from markdown import markdown
 from flask import current_app, request, url_for
 from flask.ext.login import UserMixin, AnonymousUserMixin
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import or_
 from random import seed
 import forgery_py
 
@@ -63,17 +64,25 @@ class User(UserMixin, db.Model):
     #                            cascade='all, delete-orphan')
 
     @staticmethod
-    def generate_fake(count=50):
+    def generate_fake(count=12):
         seed()
+        u_query = User.query
         for i in xrange(count):
-            u = User(email=forgery_py.internet.email_address(),
-                     username=forgery_py.internet.user_name(True),
+            email = forgery_py.internet.email_address()
+            username=forgery_py.internet.user_name(True)
+            user = u_query.filter(or_(User.email==email,
+                                      User.username==username)).first()
+            if user:
+                continue
+            u = User(email=email,
+                     username=username,
                      password=forgery_py.lorem_ipsum.word(),
                      confirmed=True,
                      name=forgery_py.name.full_name(),
                      location=forgery_py.address.city(),
                      about_me=forgery_py.lorem_ipsum.sentence(),
-                     member_since=forgery_py.date(True))
+                     member_since=forgery_py.date.date(True))
+            u.avatar_hash = u.gravatar()
             db.session.add(u)
             try:
                 db.session.commit()
@@ -252,7 +261,7 @@ class User(UserMixin, db.Model):
         return User.query.get(data['id'])
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %d>' % self.id
 
 
 class AnonymUser(AnonymousUserMixin):

@@ -63,18 +63,21 @@ def deploy():
     # migrate database to latest revision
     upgrade()
 
+    # create fake user
+    User.generate_fake()
+
     # create fake tags
-    # Tag.gen_fake()
+    Tag.generate_fake()
 
     # create user roles
     Role.insert_roles()
 
     # create self-follows for all users
-    User.add_self_follows()
+    # User.add_self_follows()
     # create fake post
     Post.generate_fake()
     # create fake link
-    Link.gen_fake()
+    Link.generate_fake()
 
 if __name__ == '__main__':
     manager.run()

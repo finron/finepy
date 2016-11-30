@@ -5,7 +5,7 @@ from flask import (render_template, Blueprint, request,
 from flask.ext.login import login_required, current_user
 from sqlalchemy import func
 from fine import db
-from fine.models import Post, Tag, Comment, User
+from fine.models import Post, PostTag, Tag, Comment, User
 
 bp = Blueprint('post', __name__)
 
@@ -60,10 +60,13 @@ def tag(tag_name):
     tag_id = tag.id
     page = request.args.get('page', 1, type=int)
     query = Post.query
-    pagination = query.filter(
-        Post.tag_id==tag_id).order_by(Post.post_time.desc()).paginate(
-        page, per_page=current_app.config['FINEPY_POSTS_PER_PAGE'],
-        error_out=False)
+    per_page = current_app.config['FINEPY_POSTS_PER_PAGE']
+    pagination = query.join(PostTag,
+        PostTag.post_id==Post.id).filter(
+            PostTag.tag_id==tag_id).order_by(
+                Post.id.desc()).paginate(
+                    page, per_page=per_page,
+                    error_out=False)
     posts = pagination.items
     return render_template('index.html', posts=posts,
                            pagination=pagination)

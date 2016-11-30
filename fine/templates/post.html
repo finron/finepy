@@ -23,18 +23,18 @@
         @{{ post.author.username }}
       </a>
     </span>
-    {% if post.tags %}
+    {% if post.get_tags() %}
     &nbsp;标签:&nbsp;
-    {% if post.tags is iterable %}
-    {% for tag_name in post.tags %}
+    {% if post.get_tags() is iterable %}
+    {% for tag in post.get_tags() %}
     <span class="label label-primary">
-      <a href="/tags/{{ tag_name }}"> {{ tag_name }}&nbsp;&nbsp;</a>
-    </span>
+      <a href="/tags/{{ tag.name }}"> {{ tag.name }} </a>
+    </span>&nbsp;&nbsp;
     {% endfor %}
     {% else %}
     <span class="label label-primary">
-      <a href="/tags/{{ post.tags.name }}"> {{ post.tags.name }}&nbsp;&nbsp;</a>
-    </span>
+      <a href="/tags/{{ post.get_tags().name }}"> {{ post.get_tags().name }}</a>
+    </span>&nbsp;&nbsp;
     {% endif %}
     {% endif %}
   </div>
@@ -57,7 +57,7 @@
       <div class="comment-body">
         <p>
           <span class="label label-default">
-            #{{ (loop.index + 1) }}
+            #{{ (loop.index) }}
           </span>
           {% set commentor = comment.get_user() %}
           {% if commentor and commentor.is_admin() %}

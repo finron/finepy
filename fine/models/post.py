@@ -14,12 +14,44 @@ from random import seed, randint
 import bleach
 import forgery_py
 
-from flask import url_for
+from flask import url_for,flash
 from fine import db
 from .tag import Tag
 from .user import User
-from .comment import Comment
 from fine.exceptions import ValidationError
+
+
+class PostTag(db.Model):
+    '''Post Tag many to many relationship'''
+
+    __tablename__ = 'post_tag'
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer)
+    tag_id = db.Column(db.Integer)
+    tags = db.relationship('Tag', foreign_keys=[tag_id],
+                           primaryjoin='PostTag.tag_id == Tag.id',
+                           backref='post_tags', lazy='joined')
+    posts = db.relationship('Post', foreign_keys=[post_id],
+                            primaryjoin='PostTag.post_id == Post.id',
+                            backref='post_tags', lazy='joined')
+
+    # def get_post(self):
+    #     post = Post.query.filter(Post.id==self.post_id).first()
+    #     return post
+
+    # def get_tags(self):
+    #     post = self.get_post()
+    #     if post:
+    #         post.tags
+
+    # def get_tag(self):
+    #     tag = Tag.query.filter(Tag.id == self.tag_id).first()
+    #     return tag
+
+    # def get_posts(self):
+    #     tag = self.get_tag()
+    #     if tag:
+    #         tag.posts
 
 
 class Post(db.Model):
@@ -38,21 +70,27 @@ class Post(db.Model):
     deleted = db.Column(db.Boolean, default=False)
     allow_comment = db.Column(db.Boolean, default=True)
     privacy = db.Column(db.Boolean, default=False)
-    # ForeignKey tags.id
-    tag_id = db.Column(db.Integer)
-    tags = db.relationship('Tag', foreign_keys=[tag_id],
-                           primaryjoin='Post.tag_id == Tag.id',
-                           backref='posts')
 
     def __init__(self, *args, **kwargs):
         super(Post, self).__init__(*args, **kwargs)
 
     def __repr__(self):
-        return '<Post {%r}>'.format(self.title)
+        return '<Post {%d}>'.format(self.id)
+
+
+    def get_tags(self):
+        ''' Get tags'''
+        # select tags.* from tags
+        # left join post_tag on tags.id = post_tag.tag_id 
+        # where post_tag.post_id = self.id
+        tags = Tag.query.join(
+            PostTag, Tag.id==PostTag.tag_id).filter(
+                PostTag.post_id == self.id).all()
+        return tags
 
     @staticmethod
     def generate_fake(count=50):
-
+        from .comment import Comment
         seed()
         u_query = User.query
         t_query = Tag.query
@@ -63,13 +101,22 @@ class Post(db.Model):
 
         for i in xrange(count):
             u = u_query.offset(randint(0, user_count-1)).first()
-            tag = t_query.offset(randint(0, tag_count-1)).first().id
-            tags = t_query.offset(randint(0, tag_count-1)).first()
+            if u:
+                author_id = u.id
             p = Post(title=forgery_py.lorem_ipsum.title(),
-                     body=forgery_py.lorem_ipsum.sentences(randint(1, 5)),
+                     body=forgery_py.lorem_ipsum.sentences(randint(1, 50)),
                      post_time=forgery_py.date.date(True),
-                     author=u, tags=tags, tag_id=tag)
+                     author_id=author_id)
             db.session.add(p)
+            # add tags
+            for t_i in xrange(randint(1, 5)):
+                tag = t_query.offset(randint(0, tag_count-1)).first()
+                tag_id = tag.id
+                p_t = PostTag(post_id=p.id, tag_id=tag_id)
+                db.session.add(p_t)
+            # add comments
+            c_count = randint(1, 42)
+            Comment.generate_fake(p.id, c_count)
         db.session.commit()
 
     @staticmethod
