@@ -6,7 +6,10 @@
       <option {% if tab_menu and tab_menu=='users' %} selected="selected" {% endif %} value="{{ url_for('admin.users') }}">用户</option>
       <option {% if tab_menu and tab_menu=='links' %} selected="selected" {% endif %} value="{{ url_for('admin.links') }}">链接</option>
       <option {% if tab_menu and tab_menu=='logs' %} selected="selected" {% endif %} value="{{ url_for('admin.logs') }}">日志</option>
-      <option {% if tab_menu and tab_menu=='settings' %} selected="selected" {% endif %} value="{{ url_for('admin.settings') }}">配置</option>
+
+      <option {% if tab_menu and tab_menu=='settings' %} selected="selected" {% endif %} value="{{ url_for('admin.settings') }}">
+      配置</option>
+
     </select>
   </li>
 
@@ -26,9 +29,9 @@
         <li>
           <!-- <input type="text" name="q_date_range" class="form-control input-date-range" placeholder="起止日期"> -->
           <div class=" input-group" id="datepicker">
-              <input type="text" class="input-date-range input-sm form-control" name="start" placeholder="起止日期"/>
-              <span class="input-group-addon">到</span>
-              <input type="text" class="input-date-range input-sm form-control" name="end" />
+            <input type="text" class="input-date-range input-sm form-control" name="start" placeholder="起止日期"/>
+            <span class="input-group-addon">到</span>
+            <input type="text" class="input-date-range input-sm form-control" name="end" />
           </div>        
         </li>
         <li>
@@ -44,7 +47,7 @@
             </span>
           </div>
         </li>
-      </div>
+      </ul>
     </form>
   </li>
 </ul>
