@@ -54,7 +54,7 @@ body .navbar #login {
 }
 body #main{
     color: #555;
-    margin: 42px !important;
+    margin: 42px 0 !important;
     padding: 4px 2px;
 }
 body #main > h1 {
