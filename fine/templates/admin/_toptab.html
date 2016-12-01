@@ -1,6 +1,6 @@
 <ul class="admin-tab">
   <li id="listtype">
-    <select class="form-control">
+    <select id='type_selected' class="form-control">
       <option {% if tab_menu and tab_menu=='posts' %} selected="selected" {% endif %} value="{{ url_for('admin.posts') }}">文章</option>
       <option {% if tab_menu and tab_menu=='comments' %} selected="selected" {% endif %} value="{{ url_for('admin.comments') }}">评论</option>
       <option {% if tab_menu and tab_menu=='users' %} selected="selected" {% endif %} value="{{ url_for('admin.users') }}">用户</option>

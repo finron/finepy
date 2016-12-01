@@ -7,7 +7,8 @@
     <thead>
       <tr>
         <th class="check-column" scope="col" style="">
-          <button class="btn btn-primary btn-xs" id="deletepost">删除</button>
+          <input class="select_all" id="select_all" type="checkbox" value="on" title="全选" name="select_all">
+          <input class="select_reverse" id="select_reverse" type="checkbox" value="on" title="反选" name="select_reverse">
         </th>
         <th>日期</th>
         <th>标题</th>
@@ -19,7 +20,7 @@
       {% for post in posts %}
         <tr>
           <th>
-            <input class="page" type="checkbox" value="on" name="{{ post.id }}">
+            <input class="page" type="checkbox" value="{{ post.id }}" name="{{ post.id }}">
           </th>
           <td>
             <div class="time">{{ post.post_time.strftime("%Y-%m-%d %H:%M") }}</div>

@@ -16,7 +16,7 @@
       <a href="/admin/post/edit/{{ post.id }}">
         编辑
       </a>
-    </span>
+    </span>&nbsp;&nbsp;
     {% endif %}
     <span class="label label-default">
       <a href="/user/{{ post.author.username }}">
@@ -58,7 +58,7 @@
         <p>
           <span class="label label-default">
             #{{ (loop.index) }}
-          </span>
+          </span>&nbsp;&nbsp;
           {% set commentor = comment.get_user() %}
           {% if commentor and commentor.is_admin() %}
           <span class="label label-default">

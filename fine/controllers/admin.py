@@ -176,3 +176,4 @@ def settings():
 @bp.route('/admin/', methods=['GET', 'POST'])
 def search():
     return ""
+

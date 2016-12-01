@@ -16,7 +16,7 @@ from flask import (
 from sqlalchemy import or_
 from flask.ext.login import (
     login_user, logout_user, login_required, current_user)
-from fine import db
+from fine import db, csrf
 from fine.models import (Post, Comment, User, Link,
                          Role, Permission, Tag)
 from fine.email import send_email

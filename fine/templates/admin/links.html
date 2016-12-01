@@ -7,7 +7,8 @@
     <thead>
       <tr>
         <th class="check-column" scope="col" style="">
-          <button class="btn btn-primary btn-xs" id="delete">删除</button>
+          <input class="select_all" id="select_all" type="checkbox" value="on" title="全选" name="select_all">
+          <input class="select_reverse" id="select_reverse" type="checkbox" value="on" title="反选" name="select_reverse">
         </th>
         <th>名称</th>
         <th>权重</th>
@@ -18,7 +19,7 @@
       {% for link in links %}
         <tr>
           <th>
-            <input class="page" type="checkbox" value="on" name="{{ link.id }}">
+            <input class="page" type="checkbox" value="{{ link.id }}" name="{{ link.id }}">
           </th>
           <td>
             <a href="/admin/link/edit/{{ link.id }}" target="_blank">[编辑]</a>

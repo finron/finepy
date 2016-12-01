@@ -158,4 +158,35 @@ class Post(db.Model):
         query = query.order_by(cls.post_id.desc())
         return query.limit(limit).offset(offset).all()
 
+    def delete(self):
+        ''' Delete post'''
+        # delete comments first
+        # delete minus tags first or delete tag when zero??
+        # delete post
+        from .comment import Comment
+        post_id = self.id
+        Comment.query.filter_by(post_id=post_id).delete()
+        db.session.commit()
+
+        tags = self.get_tags()
+        if tags:
+            for tag in tags:
+                tag.weight -= 1
+                if tag.weight <= 0:
+                    db.session.delete(tag)
+                    db.session.commit()
+                    continue
+                db.session.commit()
+
+                # delete post_tag row
+                post_tag = self.post_tags
+                if not post_tag:
+                    continue
+                for p_t in post_tag:
+                    db.session.delete(p_t)
+                    db.session.commit()
+        db.session.delete(self)
+        db.session.commit()
+
+
 db.event.listen(Post.body, 'set', Post.on_changed_body)
