@@ -9,6 +9,11 @@ def restart():
         with prefix('source venv/bin/activate'):
             run('sudo venv/bin/supervisorctl restart finepy')
 
+def restart_local():
+    """Restart the development env"""
+    with cd('/opt/www/finepy'):
+        with prefix('source ../venv/bin/activate'):
+            run('../venv/bin/supervisorctl restart finepy')
 
 if __name__ == "__main__":
     restart()
