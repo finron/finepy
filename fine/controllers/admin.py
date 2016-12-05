@@ -7,16 +7,20 @@
 from datetime import datetime
 from flask import (render_template, Blueprint, request,
                    url_for, current_app, redirect)
+from flask_login import login_required
 
 from fine import db
 from fine.models import (Post, PostTag, User, Tag, Link,
                          Comment)
 from fine.lib.util import remove_html_tag
+from fine.lib.decorators import admin_required
 
 bp = Blueprint('admin', __name__)
 
 
 @bp.route('/admin', methods=['GET', 'POST', 'PUT'])
+@login_required
+@admin_required
 def index():
     if request.method == 'GET':
         post = Post()
@@ -37,6 +41,8 @@ def index():
 @bp.route('/admin/post', methods=['GET', 'POST'])
 @bp.route('/admin/post/<int:id>', methods=['GET'])
 @bp.route('/admin/post/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def edit_post(id=None):
     if request.method == 'GET':
         if id:
@@ -94,6 +100,8 @@ def edit_post(id=None):
 @bp.route('/admin/link', methods=['GET', 'POST'])
 @bp.route('/admin/link/<int:id>', methods=['GET'])
 @bp.route('/admin/link/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def edit_link(id=None):
     if request.method == 'GET':
         if id:
@@ -122,6 +130,8 @@ def edit_link(id=None):
 
 
 @bp.route('/admin/posts', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def posts():
     page = request.args.get('page', 1, type=int)
     query = Post.query
@@ -135,11 +145,15 @@ def posts():
 
 
 @bp.route('/admin/comments', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def comments():
     return ""
 
 
 @bp.route('/admin/users', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def users():
     page = request.args.get('page', 1, type=int)
     query = User.query
@@ -153,6 +167,8 @@ def users():
 
 
 @bp.route('/admin/links', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def links():
     page = request.args.get('page', 1, type=int)
     query = Link.query
@@ -168,6 +184,8 @@ def links():
 @bp.route('/admin/user', methods=['GET', 'POST'])
 @bp.route('/admin/user/<int:id>', methods=['GET'])
 @bp.route('/admin/user/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def edit_user(id=None):
     if request.method == 'GET':
         if id:
@@ -193,15 +211,21 @@ def edit_user(id=None):
 
 
 @bp.route('/admin/logs', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def logs():
     return ""
 
 
 @bp.route('/admin/settings', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def settings():
     return ""
 
 @bp.route('/admin/', methods=['GET', 'POST'])
+@login_required
+@admin_required
 def search():
     return ""
 
