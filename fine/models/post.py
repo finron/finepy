@@ -88,6 +88,11 @@ class Post(db.Model):
                 PostTag.post_id == self.id).all()
         return tags
 
+    def get_tagname_list(self):
+        ''' Get tagname iter, it is a generator '''
+        for tag in self.get_tags():
+            yield tag.name
+
     @staticmethod
     def generate_fake(count=50):
         from .comment import Comment
@@ -157,6 +162,20 @@ class Post(db.Model):
 
         query = query.order_by(cls.post_id.desc())
         return query.limit(limit).offset(offset).all()
+
+    def has_tag(self, tagname):
+        ''' Check wheather a post has a tagname '''
+        from .tag import Tag
+        post_id = self.id
+        tag = Tag.query.filter(Tag.name==tagname).first()
+        if tag:
+            tag_id = tag.id
+            pt = PostTag.query.filter(PostTag.post_id==post_id,
+                                      PostTag.tag_id==tag_id).first()
+            if pt:
+                return True
+        return False
+
 
     def delete(self):
         ''' Delete post'''

@@ -9,7 +9,7 @@ from flask import (render_template, Blueprint, request,
                    url_for, current_app, redirect)
 
 from fine import db
-from fine.models import (Post, User, Tag, Link,
+from fine.models import (Post, PostTag, User, Tag, Link,
                          Comment)
 from fine.lib.util import remove_html_tag
 
@@ -51,6 +51,34 @@ def edit_post(id=None):
         else:
             post = Post()
         is_privacy = 'privacy' in form
+        tagname_list = form.get('post_tags', '')
+        post_id = post.id
+        t_query = Tag.query
+        pt_query = PostTag.query
+        for tagname in tagname_list.split(','):
+            # import pdb; pdb.set_trace()
+            tagname = tagname.strip()
+            if not tagname:
+                continue
+            if post.has_tag(tagname):
+                continue
+            tag = t_query.filter(Tag.name==tagname).first()
+            if tag:
+                tag_id = tag.id
+            else:
+                tag = Tag(name=tagname)
+                db.session.add(tag)
+                db.session.commit()
+                tag_id = tag.id
+            if not tag.weight:
+                tag.weight = 0
+            tag.weight += 1
+
+            pt = PostTag(post_id=post_id,
+                         tag_id=tag_id)
+            db.session.add(pt)
+            db.session.commit()
+
 
         content = form.get('post_content', 'None')
         post.body = content
@@ -61,7 +89,7 @@ def edit_post(id=None):
         post.post_time = datetime.utcnow()
         db.session.add(post)
         db.session.commit()
-        return redirect('/admin/posts.html')
+        return redirect('/admin/posts')
 
 @bp.route('/admin/link', methods=['GET', 'POST'])
 @bp.route('/admin/link/<int:id>', methods=['GET'])

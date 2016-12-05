@@ -51,17 +51,16 @@ def signin():
         password = request.form['password']
         if not name_email.strip() or not password:
             flash(u'用户名/邮箱/密码错误')
-            return redirect(url_for('.signin'))
+            return redirect('signin.html')
 
         user = User.query.filter(or_(User.email==name_email,
                                         User.username==name_email)).first()
         if user and user.verify_password(password):
             remember_me = request.form.get('remeber-me')
-            print remember_me
             login_user(user, remember_me)
             return redirect(request.args.get('next') or url_for('.index'))
         flash(u'用户名密码错误')
-        return render_template(url_for('.signin'))
+        return render_template('signin.html')
 
 
 @bp.route('/signup', methods=['GET', 'POST'])
@@ -77,7 +76,7 @@ def signup():
         password = request.form['password']
         if not username.strip() or not email.strip() or not password:
             flash(u'名称/邮箱/密码空')
-            return redirect(url_for('.signup'))
+            return redirect('signup.html')
 
         user = User.query.filter(or_(User.email==email,
                                         User.username==username)).first()

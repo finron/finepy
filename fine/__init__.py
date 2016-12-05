@@ -2,6 +2,7 @@
 # coding:utf-8
 
 import os
+import logging
 
 from flask import Flask, url_for, render_template, current_app
 from markupsafe import Markup
@@ -10,6 +11,7 @@ from flask.ext.login import LoginManager
 from flask.ext.wtf import CsrfProtect
 from flask.ext.moment import Moment
 from flask.ext.mail import Mail
+from raven.contrib.flask import Sentry
 from celery import Celery
 from config import Config, config, basedir
 
@@ -21,13 +23,15 @@ moment = Moment()
 mail = Mail()
 csrf = CsrfProtect()
 celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
+sentry = Sentry()
 
 def create_app(config_name='default'):
     app = Flask(__name__)
 
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
-
+    sentry.init_app(app, logging=True,
+                    level=logging.ERROR)
     mail.init_app(app)
     db.init_app(app)
     moment.init_app(app)
@@ -53,7 +57,7 @@ def before_req(app):
     def init_tags():
         from .models.tag import Tag
         if Tag.is_empty():
-            Tag.gen_fake()
+            Tag.generate_fake()
         from flask import g
         taglist = Tag.get_top_x()
         g.sidebar = {'taglist': taglist}

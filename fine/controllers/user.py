@@ -26,7 +26,7 @@ def oauth_callback(provider):
     oauth = OAuthBase.get_provider(provider)
     social_id, username, email = oauth.callback()
     if social_id is None:
-        flash('Authentication failed.')
+        flash(u'Third Oauth callback result is Nont,Authentication failed.')
         return redirect(url_for('front.index'))
     user = User.query.filter_by(social_id=social_id).first()
     if not user:
