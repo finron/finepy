@@ -1,0 +1,45 @@
+{% extends "base/layout.html" %}
+{% block maincontent %}
+  <ul class="posts">
+    {% for post in posts %}
+      <div class="post">
+        <p class="date">
+          {{ moment(post['post_time']).format('YYYY-MM-DD HH:mm') }}
+        </p>
+        <h1 class="post-title">
+          <a href="/post/{{ post.id }}" title="{{ post.title }}">
+            {{ post['title'] }}
+          </a>
+        </h1>
+        <div class="posted">
+          {% if post.get_tags() %}
+            &nbsp;标签:&nbsp;
+            {% if post.get_tags() is iterable %}
+              {% for tag in post.get_tags() %}
+                <span class="label label-primary">
+                  <a href="/tags/{{ tag.name }}"> {{ tag.name }} </a>
+                </span>&nbsp;&nbsp;
+              {% endfor %}
+            {% else %}
+              <span class="label label-primary">
+                <a href="/tags/{{ post.get_tags().name }}"> {{ post.get_tags().name }}</a>
+              </span>&nbsp;&nbsp;
+            {% endif %}
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </ul>
+  {% if pagination %}
+    {% from "macros/common.html" import render_pagination %}
+    <div class="page">
+      {{ render_pagination(pagination, url_for("user.user_home", user_name=user_name)) }}
+    </div>
+  {% endif %}
+{% endblock %}
+{% block sidebar %}
+  <div id="user_sidebar">
+    <a href="{{ url_for('user.user_home', user_name=user_name) }}">文章</a>
+    <a href="{{ url_for('user.user_comments', user_name=user_name) }}">评论</a>
+  </div>
+{% endblock sidebar %}

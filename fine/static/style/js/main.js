@@ -21,6 +21,11 @@ window.onload = function () {
   var toc = "";
   var level = 0;
 
+  var post_content = document.getElementById("post_content");
+  if (post_content === "" || post_content === undefined ||
+      post_content === null){
+    return;
+  }
   document.getElementById("post_content").innerHTML =
     document.getElementById("post_content").innerHTML.replace(
       /<h([\d])>([^<]+)<\/h([\d])>/gi,
@@ -30,7 +35,7 @@ window.onload = function () {
         }
 
         if (openLevel > level) {
-          toc += (new Array(openLevel - level + 1)).join("<ul>");
+          toc += (new Array(openLevel - level + 1)).join("<ul nav>");
         } else if (openLevel < level) {
           toc += (new Array(level - openLevel + 1)).join("</ul>");
         }
@@ -41,8 +46,10 @@ window.onload = function () {
         toc += "<li><a href=\"#" + anchor + "\">" + titleText
         + "</a></li>";
 
-        return "<h" + openLevel + "><a name=\"" + anchor + "\">"
-        + titleText + "</a></h" + closeLevel + ">";
+        return "<h" + openLevel + " id=\"" + anchor + "\">"
+        + titleText + "</h" + closeLevel + ">";
+        // return "<h" + openLevel + "><a name=\"" + anchor + "\">"
+        // + titleText + "</a></h" + closeLevel + ">";
       }
     );
 

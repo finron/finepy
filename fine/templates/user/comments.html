@@ -1,0 +1,33 @@
+{% extends "base/layout.html" %}
+{% block maincontent %}
+  <div class="comment">
+    <ul>
+      {% for comment in comments %}
+        <li>
+          <div class="comment-body">
+            <p>
+              &nbsp;于{{ moment(comment['create_time']).format('YYYY-MM-DD HH:mm') }}
+            </p>
+            <div style="overflow: auto;">
+              <p style="white-space: pre-wrap;">
+                {{ comment.body }}
+              </p>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% if pagination %}
+    {% from "macros/common.html" import render_pagination %}
+    <div class="page">
+      {{ render_pagination(pagination, url_for("user.user_comments", user_name=user_name)) }}
+    </div>
+  {% endif %}
+{% endblock %}
+{% block sidebar %}
+  <div id="user_sidebar">
+    <a href="{{ url_for('user.user_home', user_name=user_name) }}">文章</a>
+    <a href="{{ url_for('user.user_comments', user_name=user_name) }}">评论</a>
+  </div>
+{% endblock sidebar %}
