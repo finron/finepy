@@ -6,7 +6,8 @@ from flask import (render_template, Blueprint, flash, redirect,
 from flask_login import login_user, current_user
 from fine.lib.oauth import OAuthBase
 from fine import db
-from fine.models import User
+from fine.models import User, Permission
+from config import Config
 
 bp = Blueprint('user', __name__)
 
@@ -31,7 +32,12 @@ def oauth_callback(provider):
     user = User.query.filter_by(social_id=social_id).first()
     if not user:
         user = User(social_id=social_id, username=username, email=email)
+        if user.is_admin():
+            user.role_id = Permission.ADMIN
         db.session.add(user)
         db.session.commit()
+    elif user.is_admin():
+            user.role_id = Permission.ADMIN
+            db.session.commit()
     login_user(user, True)
     return redirect(url_for('front.index'))

@@ -1,0 +1,45 @@
+{% extends "admin/_base.html" %}
+
+{% block title %}评论管理{% endblock %}
+
+{% block managelist %}  
+  <table class="widetable table table-condensed table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="check-column" scope="col" style="">
+          <input class="select_all" id="select_all" type="checkbox" value="on" title="全选" name="select_all">
+          <input class="select_reverse" id="select_reverse" type="checkbox" value="on" title="反选" name="select_reverse">
+        </th>
+        <th>名称</th>
+        <th>评论内容</th>
+        <th>文章标题</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for comment in comments %}
+        <tr>
+          <th>
+            <input class="page" type="checkbox" value="{{ comment.id }}" name="{{ comment.id }}">
+          </th>
+          <td>
+            <a href="/admin/comment/edit/{{ comment.id }}" target="_blank">[编辑]
+
+           </a>
+          </td>
+          <td>
+            {{ comment.body }}
+          </td>
+          <td>
+            {{ comment.post.title }}
+          </td>
+        </tr>
+      {% endfor %}				
+    </tbody>
+  </table>
+{% if pagination %}
+{% from "macros/common.html" import render_pagination %}
+<div class="page">
+  {{ render_pagination(pagination, url_for("admin.comments")) }}
+</div>
+{% endif %}
+{% endblock %}

@@ -5,6 +5,7 @@ idle
 *.sqlite
 .env
 env.json
+env_local.json
 TODO.txt
 **/tags
 venv/

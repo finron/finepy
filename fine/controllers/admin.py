@@ -18,25 +18,11 @@ from fine.lib.decorators import admin_required
 bp = Blueprint('admin', __name__)
 
 
-@bp.route('/admin', methods=['GET', 'POST', 'PUT'])
+@bp.route('/admin', methods=['GET'])
 @login_required
 @admin_required
 def index():
-    if request.method == 'GET':
-        post = Post()
-        return render_template('admin/index.html', post=post,
-                               tabmenu='posts')
-    elif request.method == 'POST':
-        form = request.form
-        post = Post()
-        content = form.get('post_content', 'None')
-        content_summary = remove_html_tag(content)[:140]
-        post.title = form.get('post_title', 'None')
-        post.body_html = content_summary
-        post.body = content
-        db.session.add(post)
-        db.session.commit()
-
+    return redirect(url_for('.posts'))
 
 @bp.route('/admin/post', methods=['GET', 'POST'])
 @bp.route('/admin/post/<int:id>', methods=['GET'])
@@ -97,6 +83,26 @@ def edit_post(id=None):
         db.session.commit()
         return redirect('/admin/posts')
 
+@bp.route('/admin/comment', methods=['GET', 'POST'])
+@bp.route('/admin/comment/<int:id>', methods=['GET'])
+@bp.route('/admin/comment/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_comment(id=None):
+    if request.method == 'GET':
+        if id:
+            comment = Comment.query.get_or_404(id)
+            return render_template('admin/comment.html', comment=comment)
+        comment = Comment()
+        return render_template('admin/comment.html', comment=comment)
+    else:
+        form = request.form
+        if id:
+            comment = Comment.query.get_or_404(id)
+            comment.body = form.get('comment_body', 'None')
+            db.session.commit()
+        return redirect('/admin/comments.html')
+
 @bp.route('/admin/link', methods=['GET', 'POST'])
 @bp.route('/admin/link/<int:id>', methods=['GET'])
 @bp.route('/admin/link/edit/<int:id>', methods=['GET', 'POST'])
@@ -125,8 +131,7 @@ def edit_link(id=None):
         link.note = form.get('link_note', 'None')
         db.session.add(link)
         db.session.commit()
-        return render_template('admin/links.html',
-                               tab_menu='links')
+        return redirect('admin/links.html')
 
 
 @bp.route('/admin/posts', methods=['GET', 'POST'])
@@ -144,11 +149,19 @@ def posts():
                            tab_menu='posts')
 
 
-@bp.route('/admin/comments', methods=['GET', 'POST'])
+@bp.route('/admin/comments', methods=['GET'])
 @login_required
 @admin_required
 def comments():
-    return ""
+    page = request.args.get('page', 1, type=int)
+    query = Comment.query
+    pagination = query.order_by(Comment.create_time.desc()).paginate(
+        page, per_page=current_app.config['FINEPY_POSTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('admin/comments.html', comments=comments,
+                           pagination=pagination,
+                           tab_menu='comments')
 
 
 @bp.route('/admin/users', methods=['GET', 'POST'])

@@ -102,7 +102,8 @@ class User(UserMixin, db.Model):
         super(User, self).__init__(**kwargs)
         if not self.role:
             if self.email == current_app.config['FINEPY_ADMIN_EMAIL']:
-                self.role = Role.query.filter_by(permissions=0xff).first()
+                self.role = Role.query.filter_by(
+                    permissions=Permission.ADMIN).first()
             if not self.role:
                 self.role = Role.query.filter_by(default=True).first()
         if self.email and not self.avatar_hash:

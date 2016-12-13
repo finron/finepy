@@ -1,7 +1,7 @@
 {% extends "base/layout.html" %}
 {%- from "macros/common.html" import input_csrf_token %}
 {% block maincontent %}
-<div class="post posts">
+<div class="post posts" id="post_content">
   <p class="date">
     {{ moment(post['post_time']).format('YYYY-MM-DD HH:mm') }}
   </p>
@@ -111,3 +111,8 @@
   <input id="submit" class="btn btn-default" name="submit" value="提交" type="submit">
 </form>
 {% endblock %}
+{% block sidebar %}
+  <div id="toc_content" class="toc_content affix">
+    <h3>大纲</h3>
+  </div>
+{% endblock sidebar %}

@@ -18,7 +18,7 @@ class Permission(object):
     COMMENT = 0X10
     EDIT_COMMENT = 0x20
     DELETE_COMMENT = 0x40
-    ADMIN = 0x7f
+    ADMIN = 0xff
 
 
 class Role(db.Model):
