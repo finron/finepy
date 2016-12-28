@@ -12,6 +12,7 @@
     {{ css('style/libs/css/font-awesome.min.css') }}
     {{ css('style/css/layout.css') }}
     {{ css('style/libs/cke/contents.css') }}
+    {{ css('style/libs/css/simplePagination.css') }}
     {{ css('style/libs/cke/plugins/codesnippet/lib/highlight/styles/idea.css') }}
     {{ css('style/css/font-awesome-custom.css') }}
     {% block head_css %}{% endblock %}
@@ -51,7 +52,7 @@
     <a href="#top" class="goTop"><i class="fa fa-arrow-circle-up fa-2x"></i></a>
     {{ js('style/libs/js/jquery.min.js') }}
     {{ js('style/libs/js/bootstrap.min.js') }}
-
+    {{ js('style/libs/js/jquery.simplePagination.js') }}
     {# flask-moment src not just include .js but also do extra render script in js #}
     {{ moment.include_moment(local_js=url_for('static', filename="style/libs/js/moment-with-locales.min.js")) }}
     {# {{ moment.include_moment() }} #}

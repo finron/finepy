@@ -15,6 +15,24 @@ $(document).ready(function(){
     return false;
   });
 
+  var pageCount = $("#pager-total").text();
+  var pageUrl = $("#pager-url").text().trim();
+  $('#pagination').pagination({
+        items: pageCount,
+        itemOnPage: 8,
+        currentPage: 1,
+        cssStyle: '',
+        hrefTextPrefix: pageUrl + "?page=",
+        prevText: '<span aria-hidden="true">&laquo;</span>',
+        nextText: '<span aria-hidden="true">&raquo;</span>',
+        onInit: function () {
+            // fire first page loading
+        },
+        onPageClick: function (page, evt) {
+            // some code
+        }
+    });
+
 });
 window.onload = function () {
   /**table of content in post */
